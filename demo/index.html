@@ -10047,7 +10047,7 @@ button.evo-mini:focus-visible { outline:2px solid var(--evo-indigo); outline-off
 /* DEMONSTRAÇÃO: na primeira abertura, carrega no banco do navegador (IndexedDB) os dados FICTÍCIOS de data/*.json.
    Nada sai do navegador. */
 (function () {
-  var CHAVE = 'demo_semente_v2';   // v2: dados de out/26 (troca os de versões anteriores)
+  var CHAVE = 'demo_semente_v3';   // muda a cada troca de dados: quem já abriu recebe os novos
   function pronto() { return typeof DB !== 'undefined' && typeof BACKUP_CAMPOS !== 'undefined' && document.getElementById('dash-content'); }
   async function semear() {
     try {
@@ -10055,10 +10055,10 @@ button.evo-mini:focus-visible { outline:2px solid var(--evo-indigo); outline-off
       {
         for (var s of ['contagens', 'vendas', 'compras', 'transferencias']) { await DB.clear(s); }
         for (var s of ['contagens', 'vendas', 'compras', 'transferencias']) {
-          var rows = await (await fetch('data/' + s + '.json')).json();
+          var rows = await (await fetch('data/' + s + '.json?v=3', {cache: 'no-store'})).json();
           if (DB.addLote) await DB.addLote(s, rows); else for (var r of rows) await DB.add(s, r);
         }
-        var ov = await (await fetch('data/overlays.json')).json();
+        var ov = await (await fetch('data/overlays.json?v=3', {cache: 'no-store'})).json();
         BACKUP_CAMPOS.forEach(function (c) { if (ov[c.campo] != null) { try { c.set(ov[c.campo]); } catch (e) {} } });
         [['ceo_snapshot', 'ceo_snapshot_v1'], ['pag_snapshot', 'pag_snapshot_v1'], ['clientes_snapshot', 'cli_snapshot_v1']].forEach(function (p) {
           if (ov[p[0]] != null) localStorage.setItem(p[1], JSON.stringify(ov[p[0]]));
