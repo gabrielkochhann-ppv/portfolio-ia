@@ -1220,7 +1220,7 @@ async function bootApp() {
     atualizarChipNuvem();
     const sair = document.getElementById('nav-sair'); if (sair) sair.style.display = '';
   } else if (chip) {
-    chip.innerHTML = '<span class="badge text-bg-secondary"><i class="fas fa-laptop me-1"></i>Demonstração</span> dados fictícios';
+    chip.innerHTML = '<span class="badge text-bg-secondary"><i class="fas fa-laptop me-1"></i>Demonstração</span> dados falsos';
   }
   await init();
 }

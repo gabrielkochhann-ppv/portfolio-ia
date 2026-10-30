@@ -10033,10 +10033,13 @@ button.evo-mini:focus-visible { outline:2px solid var(--evo-indigo); outline-off
   setTimeout(function () { clearInterval(t); }, 25000);
 
   function faixa() {
-    if (document.getElementById('pv-faixa')) return;
+    if (document.getElementById('demo-aviso')) return;
+    var st = document.createElement('style');
+    st.textContent = '#demo-aviso{position:fixed;left:0;right:0;bottom:0;z-index:2147483000;background:#C12628;color:#fff;text-align:center;padding:10px 14px;font:700 14px/1.35 Inter,system-ui,sans-serif;box-shadow:0 -2px 10px rgba(0,0,0,.25)}#demo-aviso span{font-weight:500}body{padding-bottom:48px}';
+    document.head.appendChild(st);
     var f = document.createElement('div');
-    f.id = 'pv-faixa';
-    f.innerHTML = '<span class="pv-sq"></span><b>Demonstração</b> com dados fictícios — o que você lançar fica só neste navegador.';
+    f.id = 'demo-aviso'; f.setAttribute('role', 'note');
+    f.innerHTML = 'DADOS FALSOS. <span>Todos os números desta demonstração foram inventados. Nada aqui é real, e o que você lançar fica só neste navegador.</span>';
     document.body.appendChild(f);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', faixa);
