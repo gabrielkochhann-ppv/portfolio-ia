@@ -1359,6 +1359,7 @@ let _papelAtual = 'dono';       // sem nuvem (modo local) = dono
 let _paginaInicial = 'dashboard';
 
 function podeVerPagina(page) {
+  if (page === 'cardapio') return false;   // DEMONSTRAÇÃO: a tela de Fichas e insumos não abre (o motor segue usando as fichas)
   const permitidas = PAGINAS_POR_PAPEL[_papelAtual];
   return !permitidas || permitidas.includes(page);
 }
@@ -1387,8 +1388,8 @@ function aplicarPermissoes(papel) {
 function showPage(page) {
   // Rede de segurança da TELA: papel sem acesso cai na primeira página permitida.
   if (!podeVerPagina(page)) {
-    toast('Seu acesso não inclui esta tela. Fale com o dono da conta.', 'error');
-    page = _paginaInicial;
+    toast('Esta tela não está disponível na demonstração.', 'error');
+    return;                                   // DEMONSTRAÇÃO: fica onde está, sem navegar
   }
   toggleSidebar(false); // no celular, navegar fecha o menu
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
