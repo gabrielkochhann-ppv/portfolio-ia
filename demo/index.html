@@ -2,9 +2,9 @@
 <html lang="pt-BR">
 <head>
 <script id="demo-data">
-/* DEMONSTRAÇÃO: o relógio da página fica em 13/07/2026, o dia seguinte ao último dado fictício, para a visão do mês abrir cheia. */
+/* DEMONSTRAÇÃO: o relógio da página fica em 26/10/2026, o dia seguinte ao último dado fictício, para a visão do mês abrir cheia. */
 (function () {
-  var R = Date, off = new R('2026-07-13T12:00:00').getTime() - R.now();
+  var R = Date, off = new R('2026-10-26T12:00:00').getTime() - R.now();
   function FD() { var a = arguments; if (!(this instanceof FD)) return new R(R.now() + off).toString();
     if (a.length === 0) return new R(R.now() + off); return new (Function.prototype.bind.apply(R, [null].concat([].slice.call(a))))(); }
   FD.prototype = R.prototype; FD.now = function () { return R.now() + off; }; FD.UTC = R.UTC; FD.parse = R.parse; window.Date = FD;
@@ -10047,13 +10047,13 @@ button.evo-mini:focus-visible { outline:2px solid var(--evo-indigo); outline-off
 /* DEMONSTRAÇÃO: na primeira abertura, carrega no banco do navegador (IndexedDB) os dados FICTÍCIOS de data/*.json.
    Nada sai do navegador. */
 (function () {
-  var CHAVE = 'demo_semente_v1';
+  var CHAVE = 'demo_semente_v2';   // v2: dados de out/26 (troca os de versões anteriores)
   function pronto() { return typeof DB !== 'undefined' && typeof BACKUP_CAMPOS !== 'undefined' && document.getElementById('dash-content'); }
   async function semear() {
     try {
       if (localStorage.getItem(CHAVE) === 'ok') return;
-      var ja = await DB.getAll('vendas');
-      if (!ja.length) {
+      {
+        for (var s of ['contagens', 'vendas', 'compras', 'transferencias']) { await DB.clear(s); }
         for (var s of ['contagens', 'vendas', 'compras', 'transferencias']) {
           var rows = await (await fetch('data/' + s + '.json')).json();
           if (DB.addLote) await DB.addLote(s, rows); else for (var r of rows) await DB.add(s, r);
