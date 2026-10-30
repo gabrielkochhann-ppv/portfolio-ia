@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sistema de Gestão · Pizza Para Você · Demonstração</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#21294E; --navy-d:#171D38; --indigo:#4054B2; --indigo-d:#35479A; --red:#C12628; --red-bg:#FBE8E8;
+    --gold:#E0A400; --gold-bg:#FFF5D8; --gold-txt:#8A6408; --ok:#1F7A4D; --ok-bg:#E4F4EC;
+    --ink:#1B2033; --muted:#69727D; --faint:#667085; --line:#DCDEE7; --calm:#EEF0F5; --bg:#F5F6FA; --card:#fff;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:Inter,system-ui,sans-serif; font-size:14px; color:var(--ink); background:var(--bg); line-height:1.4; }
+  button,input,select { font:inherit; color:inherit; }
+  .shell { display:flex; min-height:100vh; }
+  aside { width:220px; background:var(--navy); color:#fff; padding:16px 12px; position:sticky; top:0; height:100vh; flex-shrink:0; }
+  aside img { width:84px; display:block; margin:0 auto 10px; border-radius:8px; background:#fff; padding:4px; }
+  .sec { font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:#8d97c4; margin:16px 8px 6px; }
+  .nav { display:block; width:100%; text-align:left; background:none; border:0; color:#dfe3f5; padding:9px 10px; border-radius:8px; cursor:pointer; font-size:13.5px; }
+  .nav:hover { background:rgba(255,255,255,.07); }
+  .nav.on { background:rgba(255,255,255,.14); color:#fff; font-weight:600; box-shadow:inset 3px 0 0 var(--red); }
+  .nav.off { opacity:.45; cursor:default; }
+  main { flex:1; min-width:0; }
+  .fict { background:var(--gold-bg); color:var(--gold-txt); border-bottom:1px solid #f0d78a; padding:9px 24px; font-size:13px; display:flex; gap:8px; align-items:center; }
+  .fict b { color:#6b4c04; }
+  .wrap { padding:22px 24px 40px; max-width:1180px; margin:0 auto; }
+  .eyebrow { font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); }
+  h1 { font-family:Fraunces,Georgia,serif; font-size:28px; color:var(--navy); margin:2px 0 4px; }
+  .lead { color:var(--muted); margin-bottom:14px; }
+  .bar { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:10px 0 16px; }
+  .seg { display:inline-flex; background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+  .seg button { background:none; border:0; padding:7px 13px; cursor:pointer; color:var(--muted); }
+  .seg button.on { background:var(--calm); color:var(--indigo); font-weight:600; }
+  .grid { display:grid; gap:12px; }
+  .kpis { grid-template-columns:repeat(4,1fr); }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 16px; }
+  .k-l { font-size:12.5px; color:var(--muted); }
+  .k-v { font-family:Fraunces,Georgia,serif; font-size:26px; font-weight:700; color:var(--navy); margin:2px 0; }
+  .k-s { font-size:12px; color:var(--faint); }
+  .k-v.red { color:var(--red); }
+  .two { grid-template-columns:2fr 1fr; margin-top:12px; }
+  .h2 { font-family:Fraunces,Georgia,serif; font-size:18px; color:var(--navy); margin-bottom:8px; }
+  svg text { font-family:Inter,sans-serif; font-size:11px; fill:var(--faint); }
+  .dark { background:var(--navy); color:#fff; border:0; display:flex; flex-direction:column; gap:10px; }
+  .dark .eyebrow { color:#aab3de; }
+  .dark h3 { font-family:Fraunces,Georgia,serif; font-size:21px; line-height:1.2; }
+  .dark .big { font-size:40px; font-family:Fraunces,serif; font-weight:700; }
+  .dark ul { list-style:none; display:grid; gap:8px; font-size:13px; color:#dfe3f5; }
+  .dark li { background:rgba(255,255,255,.08); border-radius:8px; padding:8px 10px; }
+  table { width:100%; border-collapse:collapse; }
+  th { text-align:right; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); font-weight:600; padding:6px 8px; border-bottom:1px solid var(--line); }
+  td { text-align:right; padding:9px 8px; border-bottom:1px solid var(--calm); font-variant-numeric:tabular-nums; }
+  th:first-child, td:first-child { text-align:left; }
+  tr.click { cursor:pointer; }
+  tr.click:hover td { background:#FAFAFD; }
+  .tag { display:inline-block; font-size:11.5px; padding:2px 8px; border-radius:999px; }
+  .tag.ok { background:var(--ok-bg); color:var(--ok); }
+  .tag.bad { background:var(--red-bg); color:var(--red); }
+  .tag.warn { background:var(--gold-bg); color:var(--gold-txt); }
+  .bars .row { display:grid; grid-template-columns:110px 1fr 90px; gap:8px; align-items:center; margin:7px 0; font-size:13px; }
+  .bars .track { background:var(--calm); height:10px; border-radius:6px; overflow:hidden; }
+  .bars .fill { background:var(--indigo); height:100%; border-radius:6px; }
+  .note { font-size:12px; color:var(--faint); margin-top:8px; }
+  .btn { background:var(--indigo); color:#fff; border:0; border-radius:8px; padding:8px 14px; cursor:pointer; font-weight:600; }
+  .btn.ghost { background:#fff; color:var(--indigo); border:1px solid var(--line); }
+  input[type=number] { width:100px; padding:6px 8px; border:1px solid var(--line); border-radius:6px; text-align:right; background:#fff; }
+  input[type=number].bad { border-color:var(--red); background:var(--red-bg); }
+  input[type=number].warn { border-color:var(--gold); background:var(--gold-bg); }
+  input[type=range] { width:100%; accent-color:var(--indigo); }
+  select { padding:7px 10px; border:1px solid var(--line); border-radius:8px; background:#fff; }
+  .detail { margin-top:12px; }
+  .hide { display:none; }
+  .res { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:12px; }
+  .res .card .k-v { font-size:22px; }
+  .stores { margin-top:12px; }
+  .foot { margin-top:26px; color:var(--faint); font-size:12px; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+  .top-m { display:none; }
+  @media (max-width:900px) {
+    .shell { flex-direction:column; }
+    aside { width:100%; height:auto; position:static; display:flex; flex-wrap:wrap; align-items:center; gap:4px; padding:10px; }
+    aside img { width:46px; margin:0 8px 0 0; }
+    .sec { display:none; }
+    .nav { width:auto; padding:8px 12px; }
+    .nav.on { box-shadow:none; }
+    .nav.off { display:none; }
+    .kpis { grid-template-columns:repeat(2,1fr); }
+    .two { grid-template-columns:1fr; }
+    .res { grid-template-columns:1fr; }
+    .wrap { padding:16px 14px 36px; }
+    .fict { padding:9px 14px; }
+    .bars .row { grid-template-columns:90px 1fr 70px; }
+    .scroll { overflow-x:auto; }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside>
+    <img src="../assets/logo.png" alt="Pizza Para Você">
+    <div class="sec">Acompanhar</div>
+    <button class="nav on" data-tab="visao">Visão geral</button>
+    <div class="sec">Registrar</div>
+    <button class="nav" data-tab="contagem">Contar estoque</button>
+    <div class="sec">Análise</div>
+    <button class="nav" data-tab="porcao">Porção por pizza</button>
+  </aside>
+  <main>
+    <div class="fict" role="note"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg><span><b>Dados fictícios.</b> Todos os números desta demonstração foram inventados para você poder mexer. Nenhum valor é real.</span></div>
+    <div class="wrap">
+
+      <!-- VISÃO GERAL -->
+      <section id="visao">
+        <h1>Visão da operação</h1>
+        <p class="lead">Os números que importam. As próximas ações, à mão.</p>
+        <div class="bar">
+          <select id="loja" aria-label="Loja">
+            <option value="all">Todas as lojas</option>
+            <option value="Buritis">Buritis</option>
+            <option value="Planalto">Planalto</option>
+            <option value="Venda Nova">Venda Nova</option>
+          </select>
+          <div class="seg" id="semana" role="group" aria-label="Período">
+            <button data-p="mes" class="on">Mês inteiro</button>
+            <button data-p="s1">1ª semana</button>
+            <button data-p="s2">2ª</button>
+            <button data-p="s3">3ª</button>
+            <button data-p="s4">4ª</button>
+          </div>
+          <span class="note" style="margin:0">mês fictício: set/26</span>
+        </div>
+
+        <div class="grid kpis">
+          <div class="card"><div class="k-l">Faturamento</div><div class="k-v" id="k-fat">-</div><div class="k-s" id="k-fat-s"></div></div>
+          <div class="card"><div class="k-l">Pizzas vendidas</div><div class="k-v" id="k-piz">-</div><div class="k-s">todas as formas de venda</div></div>
+          <div class="card"><div class="k-l">Faturamento por pizza</div><div class="k-v" id="k-tk">-</div><div class="k-s">faturamento ÷ pizzas</div></div>
+          <div class="card"><div class="k-l">Itens fora do padrão</div><div class="k-v" id="k-fora">-</div><div class="k-s">na última contagem (aba Contar estoque)</div></div>
+        </div>
+
+        <div class="grid two">
+          <div class="card">
+            <div class="h2">O ritmo da operação</div>
+            <div class="bar" style="margin:0 0 6px">
+              <div class="seg" id="metrica"><button data-m="fat" class="on">Faturamento</button><button data-m="piz">Pizzas</button></div>
+            </div>
+            <svg id="chart" viewBox="0 0 640 230" width="100%" role="img" aria-label="Gráfico diário"></svg>
+            <div class="note">Toque num dia para abrir o detalhe: formas de pagamento.</div>
+          </div>
+          <div class="card dark">
+            <div class="h2" style="color:#fff;margin:0">Próxima ação</div>
+            <h3 id="acao-t">Tudo em ordem.</h3>
+            <div class="big" id="acao-n">0</div>
+            <ul id="acao-l"></ul>
+          </div>
+        </div>
+
+        <div class="card detail hide" id="detalhe"></div>
+
+        <div class="card stores">
+          <div class="h2">Sua rede, lado a lado</div>
+          <div class="scroll"><table id="lojas">
+            <thead><tr><th>Loja</th><th>Faturamento</th><th>Pizzas</th><th>Fat. por pizza</th><th>Participação</th></tr></thead>
+            <tbody></tbody>
+          </table></div>
+        </div>
+
+        <div class="grid two">
+          <div class="card bars"><div class="h2">Sabores mais vendidos</div><div id="sabores"></div><div class="note">Mix fictício. Meia pizza conta 0,5.</div></div>
+          <div class="card"><div class="h2">Como ler esta demo</div>
+            <p style="font-size:13px;color:var(--muted)">Troque a loja e a semana, toque num dia do gráfico e depois abra <b>Contar estoque</b>: o que você digitar lá muda o aviso de <b>Próxima ação</b> e o cartão de itens fora do padrão.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTAGEM -->
+      <section id="contagem" class="hide">
+        <h1>Contar estoque</h1>
+        <p class="lead">Digite o que você contou. O sistema compara com o que a ficha técnica diz que deveria ter e avisa na hora.</p>
+        <div class="bar">
+          <select id="loja2" aria-label="Loja da contagem">
+            <option value="Buritis">Buritis</option><option value="Planalto">Planalto</option><option value="Venda Nova">Venda Nova</option>
+          </select>
+          <button class="btn ghost" id="reset-c">Voltar aos valores de exemplo</button>
+          <span class="note" style="margin:0">Regra desta demo: fora do padrão = diferença maior que 5% do esperado.</span>
+        </div>
+        <div class="card"><div class="scroll"><table id="tcont">
+          <thead><tr><th>Insumo</th><th>Estoque anterior</th><th>Compras</th><th>Consumo pela ficha</th><th>Esperado</th><th>Contado</th><th>Diferença</th><th>Situação</th></tr></thead>
+          <tbody></tbody>
+        </table></div></div>
+        <div class="res">
+          <div class="card"><div class="k-l">Valor da diferença (insumos faltando)</div><div class="k-v red" id="c-perda">-</div><div class="k-s">diferença negativa × preço do insumo</div></div>
+          <div class="card"><div class="k-l">Itens fora do padrão</div><div class="k-v" id="c-fora">-</div><div class="k-s" id="c-fora-s"></div></div>
+          <div class="card"><div class="k-l">Itens contados</div><div class="k-v" id="c-qtd">-</div><div class="k-s">100% dos insumos da ficha</div></div>
+        </div>
+      </section>
+
+      <!-- PORÇÃO -->
+      <section id="porcao" class="hide">
+        <h1>Porção de mussarela por pizza</h1>
+        <p class="lead">A mussarela é o insumo mais pesado no custo. Mexa na porção e veja o efeito no mês.</p>
+        <div class="card">
+          <div class="bar" style="margin-top:0">
+            <label for="gr" style="font-weight:600">Gramas de mussarela por pizza: <span id="gr-v">130</span> g</label>
+          </div>
+          <input type="range" id="gr" min="100" max="170" step="1" value="130" aria-label="Gramas por pizza">
+          <div class="note">Padrão da ficha técnica nesta demo: 130 g. Valores fictícios.</div>
+        </div>
+        <div class="res">
+          <div class="card"><div class="k-l">Mussarela consumida no mês</div><div class="k-v" id="p-kg">-</div><div class="k-s" id="p-kg-s"></div></div>
+          <div class="card"><div class="k-l">Custo da mussarela no mês</div><div class="k-v" id="p-custo">-</div><div class="k-s">preço fictício: R$ 38,00 por kg</div></div>
+          <div class="card"><div class="k-l">Diferença contra o padrão</div><div class="k-v" id="p-dif">-</div><div class="k-s" id="p-dif-s"></div></div>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <div class="h2">A mesma conta, loja a loja</div>
+          <div class="scroll"><table id="tporc">
+            <thead><tr><th>Loja</th><th>Pizzas no mês</th><th>Mussarela (kg)</th><th>Custo</th><th>Diferença contra 130 g</th></tr></thead>
+            <tbody></tbody>
+          </table></div>
+        </div>
+      </section>
+
+      <div class="foot"><span>Pizza Para Você · demonstração com dados fictícios</span><span>Portfólio de Gabriel Kochhann Silva</span></div>
+    </div>
+  </main>
+</div>
+
+<script>
+/* ---------- Dados fictícios (gerados com semente fixa, sempre iguais) ---------- */
+function rng(seed){ let s=seed>>>0; return function(){ s=(s*1664525+1013904223)>>>0; return s/4294967296; }; }
+const LOJAS = [
+  { nome:'Buritis',    base:3300, fpp:33.4, seed:11 },
+  { nome:'Planalto',   base:4500, fpp:32.1, seed:23 },
+  { nome:'Venda Nova', base:2300, fpp:34.8, seed:37 }
+];
+const FORMAS = [['Dinheiro',.12],['Crédito',.31],['Débito',.19],['Pix',.2],['App de delivery',.18]];
+const MULT_SEMANA = [1.05, .78, .8, .85, .95, 1.35, 1.5]; /* seg a dom */
+const DIAS = 30; /* set/26: 1º = terça */
+const dados = {}; /* dados[loja][dia] = {fat, piz} */
+LOJAS.forEach(l=>{
+  const r = rng(l.seed); dados[l.nome]=[];
+  for(let d=1; d<=DIAS; d++){
+    const mult = MULT_SEMANA[d % 7]; /* dia 1 = terça: índice 1 */
+    const fat = Math.round(l.base * mult * (0.88 + r()*0.24) * 100)/100;
+    dados[l.nome].push({ dia:d, fat:fat, piz:Math.round(fat/l.fpp) });
+  }
+});
+const SABORES = [['Calabresa',.31],['Frango catupiry',.18],['Portuguesa',.07],['Quatro queijos',.05],['Bacon cheddar',.05],['Outros',.34]];
+
+/* Insumos: preço fictício, consumo da ficha por pizza (em unidade do insumo) */
+const INSUMOS = [
+  { n:'Mussarela',        un:'kg', preco:38.00, porPizza:0.130, iniF:.12, compF:1.03 },
+  { n:'Calabresa',        un:'kg', preco:29.50, porPizza:0.045, iniF:.15, compF:1.05 },
+  { n:'Frango desfiado',  un:'kg', preco:24.00, porPizza:0.050, iniF:.14, compF:1.04 },
+  { n:'Molho de tomate',  un:'kg', preco:9.80,  porPizza:0.060, iniF:.15, compF:1.05 },
+  { n:'Bacon',            un:'kg', preco:34.00, porPizza:0.030, iniF:.18, compF:1.06 },
+  { n:'Catupiry',         un:'kg', preco:31.00, porPizza:0.035, iniF:.16, compF:1.05 },
+  { n:'Farinha de trigo', un:'kg', preco:4.90,  porPizza:0.140, iniF:.20, compF:1.08 },
+  { n:'Refrigerante 2 L', un:'un', preco:9.20,  porPizza:0.220, iniF:.15, compF:1.05 }
+];
+/* iniF e compF: estoque anterior e compras do mês, como fração do consumo pela ficha (valores fictícios) */
+/* Valores contados de exemplo: pequenas diferenças criadas à mão para a demonstração */
+const DESVIO_EXEMPLO = { 'Buritis':[-0.07,-0.02,0.01,0.03,-0.06,0.00,0.02,-0.01],
+                         'Planalto':[-0.03,0.01,-0.01,0.02,0.00,-0.02,0.01,0.02],
+                         'Venda Nova':[-0.09,-0.06,0.03,0.00,-0.02,-0.07,0.04,0.01] };
+
+/* ---------- Utilidades ---------- */
+const $ = s=>document.querySelector(s);
+const brl = v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const num = (v,d=0)=>v.toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d});
+const FAIXA = { mes:[1,30], s1:[1,7], s2:[8,14], s3:[15,21], s4:[22,28] };
+let est = { loja:'all', per:'mes', met:'fat', diaSel:null };
+
+function dadosDe(loja, per){
+  const [a,b] = FAIXA[per];
+  const nomes = loja==='all' ? LOJAS.map(l=>l.nome) : [loja];
+  const dias=[];
+  for(let d=a; d<=b; d++){
+    let fat=0,piz=0; nomes.forEach(n=>{ const x=dados[n][d-1]; fat+=x.fat; piz+=x.piz; });
+    dias.push({dia:d,fat,piz});
+  }
+  return dias;
+}
+
+/* ---------- Visão geral ---------- */
+function desenharVisao(){
+  const dias = dadosDe(est.loja, est.per);
+  const fat = dias.reduce((s,x)=>s+x.fat,0), piz = dias.reduce((s,x)=>s+x.piz,0);
+  $('#k-fat').textContent = brl(fat);
+  $('#k-fat-s').textContent = dias.length+' dias · média '+brl(fat/dias.length)+' por dia';
+  $('#k-piz').textContent = num(piz);
+  $('#k-tk').textContent = brl(fat/piz);
+
+  /* gráfico */
+  const W=640,H=230,pl=68,pr=10,pt=12,pb=26;
+  const vals = dias.map(x=>x[est.met]);
+  const max = Math.max(...vals)*1.12;
+  const x = i=> pl + (W-pl-pr) * (dias.length===1?0.5:i/(dias.length-1));
+  const y = v=> pt + (H-pt-pb) * (1 - v/max);
+  let g='';
+  for(let t=0;t<=4;t++){ const v=max*t/4, yy=y(v); g+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+yy+'" y2="'+yy+'" stroke="#EEF0F5"/><text x="'+(pl-6)+'" y="'+(yy+4)+'" text-anchor="end">'+(est.met==='fat'?'R$ '+num(v/1000,0)+' mil':num(v,0))+'</text>'; }
+  const pts = dias.map((d,i)=>x(i)+','+y(d[est.met])).join(' ');
+  g+='<polyline points="'+x(0)+','+y(0)+' '+pts+' '+x(dias.length-1)+','+y(0)+'" fill="#4054B2" fill-opacity=".08" stroke="none"/>';
+  g+='<polyline points="'+pts+'" fill="none" stroke="#4054B2" stroke-width="2.2"/>';
+  dias.forEach((d,i)=>{
+    const sel = est.diaSel===d.dia;
+    g+='<circle cx="'+x(i)+'" cy="'+y(d[est.met])+'" r="'+(sel?6:3.4)+'" fill="'+(sel?'#C12628':'#fff')+'" stroke="'+(sel?'#C12628':'#4054B2')+'" stroke-width="1.8"/>';
+    if(dias.length<=14 || d.dia%5===1) g+='<text x="'+x(i)+'" y="'+(H-8)+'" text-anchor="middle">'+String(d.dia).padStart(2,'0')+'</text>';
+    g+='<rect x="'+(x(i)-12)+'" y="0" width="24" height="'+H+'" fill="transparent" style="cursor:pointer" data-dia="'+d.dia+'"><title>Dia '+d.dia+': '+(est.met==='fat'?brl(d.fat):num(d.piz)+' pizzas')+'</title></rect>';
+  });
+  $('#chart').innerHTML = g;
+  $('#chart').querySelectorAll('rect[data-dia]').forEach(r=>r.addEventListener('click',()=>{ est.diaSel=+r.dataset.dia; desenharVisao(); desenharDetalhe(); }));
+  desenharDetalhe();
+
+  /* lojas */
+  const tot = LOJAS.reduce((s,l)=>s+dadosDe(l.nome,est.per).reduce((a,b)=>a+b.fat,0),0);
+  $('#lojas tbody').innerHTML = LOJAS.map(l=>{
+    const dd=dadosDe(l.nome,est.per), f=dd.reduce((a,b)=>a+b.fat,0), p=dd.reduce((a,b)=>a+b.piz,0);
+    return '<tr class="click" data-l="'+l.nome+'"><td><b>'+l.nome+'</b></td><td>'+brl(f)+'</td><td>'+num(p)+'</td><td>'+brl(f/p)+'</td><td>'+num(f/tot*100,1)+'%</td></tr>';
+  }).join('');
+  $('#lojas tbody').querySelectorAll('tr').forEach(tr=>tr.addEventListener('click',()=>{ est.loja=tr.dataset.l; $('#loja').value=est.loja; est.diaSel=null; desenharVisao(); window.scrollTo({top:0,behavior:'smooth'}); }));
+
+  /* sabores */
+  $('#sabores').innerHTML = SABORES.map(s=>'<div class="row"><span>'+s[0]+'</span><div class="track"><div class="fill" style="width:'+(s[1]*100/0.34)+'%;'+(s[0]==='Outros'?'background:#BFC4D3':'')+'"></div></div><span style="text-align:right">'+num(piz*s[1])+' · '+num(s[1]*100,0)+'%</span></div>').join('');
+  atualizarAcao();
+}
+function desenharDetalhe(){
+  const box = $('#detalhe');
+  if(est.diaSel==null){ box.classList.add('hide'); return; }
+  const d = dadosDe(est.loja,'mes')[est.diaSel-1];
+  const nomes = est.loja==='all' ? LOJAS.map(l=>l.nome) : [est.loja];
+  const r = rng(est.diaSel*7+nomes.length);
+  let sobra=d.fat, linhas='';
+  FORMAS.forEach((f,i)=>{
+    const v = i===FORMAS.length-1 ? sobra : Math.round(d.fat*f[1]*(0.92+r()*0.16)*100)/100;
+    sobra -= v;
+    linhas += '<tr><td>'+f[0]+'</td><td>'+brl(v)+'</td><td>'+num(v/d.fat*100,1)+'%</td></tr>';
+  });
+  box.classList.remove('hide');
+  box.innerHTML = '<div class="h2">'+String(d.dia).padStart(2,'0')+'/09/2026 · '+(est.loja==='all'?'Todas as lojas':est.loja)+'</div>'
+    +'<div class="note" style="margin:0 0 6px">Faturamento '+brl(d.fat)+' · '+num(d.piz)+' pizzas · a soma das formas bate com o faturamento do dia</div>'
+    +'<table><thead><tr><th>Forma de pagamento</th><th>Valor</th><th>Parte do dia</th></tr></thead><tbody>'+linhas+'</tbody></table>';
+}
+
+/* ---------- Contagem ---------- */
+const contados = {}; /* contados[loja][i] */
+function pizzasMes(loja){ return dadosDe(loja,'mes').reduce((s,x)=>s+x.piz,0); }
+function linhaInsumo(loja,i){
+  const ins = INSUMOS[i];
+  const cons = Math.round(pizzasMes(loja)*ins.porPizza*10)/10;
+  const ini = Math.round(cons*ins.iniF*10)/10, comp = Math.round(cons*ins.compF*10)/10;
+  const esp = Math.round((ini+comp-cons)*10)/10;
+  return { ini, comp, cons, esp };
+}
+function iniciarContados(loja){
+  contados[loja] = INSUMOS.map((_,i)=>{ const L=linhaInsumo(loja,i); return Math.round(L.esp*(1+DESVIO_EXEMPLO[loja][i])*10)/10; });
+}
+LOJAS.forEach(l=>iniciarContados(l.nome));
+function situacao(esp,cont){ const p=(cont-esp)/esp; return Math.abs(p)>0.05 ? (p<0?'bad':'warn') : 'ok'; }
+function desenharContagem(){
+  const loja = $('#loja2').value;
+  $('#tcont tbody').innerHTML = INSUMOS.map((ins,i)=>{
+    const L=linhaInsumo(loja,i), c=contados[loja][i], dif=c-L.esp, p=dif/L.esp, s=situacao(L.esp,c);
+    return '<tr><td><b>'+ins.n+'</b> <span class="note">('+ins.un+')</span></td><td>'+num(L.ini,1)+'</td><td>'+num(L.comp,1)+'</td><td>'+num(L.cons,1)+'</td><td>'+num(L.esp,1)+'</td>'
+      +'<td><input type="number" step="0.1" min="0" data-i="'+i+'" value="'+c+'" class="'+(s==='ok'?'':(s==='bad'?'bad':'warn'))+'" aria-label="Contado '+ins.n+'"></td>'
+      +'<td>'+(dif>0?'+':'')+num(dif,1)+' ('+(p>0?'+':'')+num(p*100,1)+'%)</td>'
+      +'<td><span class="tag '+(s==='ok'?'ok':(s==='bad'?'bad':'warn'))+'">'+(s==='ok'?'dentro do padrão':(s==='bad'?'faltando':'sobrando'))+'</span></td></tr>';
+  }).join('');
+  $('#tcont tbody').querySelectorAll('input').forEach(inp=>inp.addEventListener('input',()=>{
+    const v=parseFloat(inp.value.replace(',','.')); if(isNaN(v)||v<0) return;
+    contados[loja][+inp.dataset.i]=v; atualizarResumoContagem(loja); atualizarLinha(inp,loja,+inp.dataset.i);
+  }));
+  atualizarResumoContagem(loja);
+}
+function atualizarLinha(inp,loja,i){
+  const L=linhaInsumo(loja,i), c=contados[loja][i], dif=c-L.esp, p=dif/L.esp, s=situacao(L.esp,c), tr=inp.closest('tr');
+  inp.className = s==='ok'?'':(s==='bad'?'bad':'warn');
+  tr.children[6].textContent=(dif>0?'+':'')+num(dif,1)+' ('+(p>0?'+':'')+num(p*100,1)+'%)';
+  tr.children[7].innerHTML='<span class="tag '+(s==='ok'?'ok':(s==='bad'?'bad':'warn'))+'">'+(s==='ok'?'dentro do padrão':(s==='bad'?'faltando':'sobrando'))+'</span>';
+}
+function resumoContagem(loja){
+  let perda=0, fora=0;
+  INSUMOS.forEach((ins,i)=>{ const L=linhaInsumo(loja,i), c=contados[loja][i], dif=c-L.esp; if(dif<0) perda+=-dif*ins.preco; if(situacao(L.esp,c)!=='ok') fora++; });
+  return { perda, fora };
+}
+function atualizarResumoContagem(loja){
+  const r=resumoContagem(loja);
+  $('#c-perda').textContent = brl(r.perda);
+  $('#c-fora').textContent = r.fora+' de '+INSUMOS.length;
+  $('#c-fora-s').textContent = r.fora===0 ? 'tudo dentro do padrão' : 'avisado na hora da contagem';
+  $('#c-qtd').textContent = INSUMOS.length;
+  atualizarAcao();
+}
+function atualizarAcao(){
+  let fora=0, itens=[];
+  LOJAS.forEach(l=>INSUMOS.forEach((ins,i)=>{ const L=linhaInsumo(l.nome,i), c=contados[l.nome][i]; if(situacao(L.esp,c)!=='ok'){ fora++; itens.push(l.nome+': '+ins.n+' '+(c<L.esp?'faltando ':'sobrando ')+num(Math.abs(c-L.esp),1)+' '+ins.un); } }));
+  $('#k-fora').textContent = fora; $('#k-fora').classList.toggle('red',fora>0);
+  $('#acao-n').textContent = fora;
+  $('#acao-t').textContent = fora===0 ? 'Tudo em ordem.' : 'Alguns pontos pedem sua atenção.';
+  $('#acao-l').innerHTML = fora===0 ? '<li>Nenhum insumo fora do padrão na última contagem.</li>' : itens.slice(0,4).map(t=>'<li>'+t+'</li>').join('') + (itens.length>4?'<li>e mais '+(itens.length-4)+' item(ns)</li>':'');
+}
+
+/* ---------- Porção ---------- */
+function desenharPorcao(){
+  const g = +$('#gr').value; $('#gr-v').textContent = g;
+  const preco = 38, pz = pizzasMes('all');
+  const kg = pz*g/1000, kgPad = pz*130/1000, custo = kg*preco, dif = (kg-kgPad)*preco;
+  $('#p-kg').textContent = num(kg,0)+' kg'; $('#p-kg-s').textContent = num(pz)+' pizzas × '+g+' g';
+  $('#p-custo').textContent = brl(custo);
+  $('#p-dif').textContent = (dif>0?'+':'')+brl(dif); $('#p-dif').classList.toggle('red',dif>0);
+  $('#p-dif-s').textContent = dif>0 ? 'a mais por mês contra 130 g' : (dif<0?'a menos por mês contra 130 g':'igual ao padrão');
+  $('#tporc tbody').innerHTML = LOJAS.map(l=>{
+    const p=pizzasMes(l.nome), k=p*g/1000, d=(k-p*130/1000)*preco;
+    return '<tr><td><b>'+l.nome+'</b></td><td>'+num(p)+'</td><td>'+num(k,0)+'</td><td>'+brl(k*preco)+'</td><td>'+(d>0?'+':'')+brl(d)+'</td></tr>';
+  }).join('');
+}
+
+/* ---------- Navegação e controles ---------- */
+document.querySelectorAll('.nav[data-tab]').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.nav').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+  ['visao','contagem','porcao'].forEach(id=>$('#'+id).classList.toggle('hide',id!==b.dataset.tab));
+  if(b.dataset.tab==='contagem') desenharContagem();
+  if(b.dataset.tab==='porcao') desenharPorcao();
+  window.scrollTo(0,0);
+}));
+$('#loja').addEventListener('change',e=>{ est.loja=e.target.value; est.diaSel=null; desenharVisao(); });
+$('#semana').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ $('#semana').querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); est.per=b.dataset.p; est.diaSel=null; desenharVisao(); }));
+$('#metrica').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ $('#metrica').querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); est.met=b.dataset.m; desenharVisao(); }));
+$('#loja2').addEventListener('change',desenharContagem);
+$('#reset-c').addEventListener('click',()=>{ iniciarContados($('#loja2').value); desenharContagem(); });
+$('#gr').addEventListener('input',desenharPorcao);
+desenharVisao();
+</script>
+</body>
+</html>

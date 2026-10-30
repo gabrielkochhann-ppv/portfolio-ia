@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gabriel Kochhann Silva · AI Builder · Portfólio</title>
+<meta name="description" content="Portfólio de Gabriel Kochhann Silva: sistema de gestão e três agentes de IA que apoiam a tomada de decisão numa rede de pizzarias delivery.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#21294E; --navy-d:#171D38; --indigo:#4054B2; --red:#C12628; --red-d:#A81F21;
+    --gold-bg:#FFF5D8; --gold-line:#E8CF85; --gold-txt:#7A5800; --green:#1F7A4D;
+    --ink:#1B2033; --body:#363E4E; --muted:#59616F; --line:#D5D9E4; --calm:#EEF0F5; --bg:#F5F6FA;
+    --on-navy:#DDE1F3; --on-navy-2:#B4BCE0;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; scrollbar-color:var(--indigo) var(--calm); }
+  body { font-family:Inter,system-ui,sans-serif; font-size:16px; line-height:1.6; color:var(--body); background:var(--bg); font-variant-numeric:tabular-nums; }
+  ::selection { background:var(--indigo); color:#fff; }
+  a { color:var(--indigo); text-underline-offset:3px; text-decoration-thickness:1px; }
+  a:focus-visible, button:focus-visible, video:focus-visible { outline:3px solid var(--indigo); outline-offset:3px; border-radius:4px; }
+  .navy a:focus-visible { outline-color:#fff; }
+  h1,h2,h3 { font-family:Fraunces,Georgia,serif; color:var(--navy); text-wrap:balance; }
+  .wrap { max-width:1080px; margin:0 auto; padding:0 24px; }
+  p { max-width:66ch; }
+
+  /* ---------- Abertura: a demo é a primeira coisa que se vê ---------- */
+  .navy { background:var(--navy); color:#fff; }
+  nav { display:flex; gap:22px; align-items:center; flex-wrap:wrap; padding:16px 0; font-size:14px; }
+  nav .brand { font-weight:700; margin-right:auto; letter-spacing:.01em; }
+  nav a { color:var(--on-navy); text-decoration:none; }
+  nav a:hover { color:#fff; text-decoration:underline; }
+  .hero { display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.25fr); gap:44px; align-items:center; padding:30px 0 64px; }
+  .hero h1 { color:#fff; font-size:clamp(34px,5vw,54px); line-height:1.06; letter-spacing:-.015em; margin-bottom:18px; }
+  .hero p { color:var(--on-navy); font-size:18px; }
+  .btns { display:flex; gap:10px; flex-wrap:wrap; margin-top:26px; }
+  .btn { display:inline-block; background:var(--red); color:#fff; padding:12px 20px; border-radius:9px; font-weight:600; text-decoration:none; border:1px solid var(--red); transition:background .15s, transform .15s; }
+  .btn:hover { background:var(--red-d); }
+  .btn:active { transform:translateY(1px); }
+  .btn.alt { background:transparent; border-color:#6F7AB0; color:#fff; }
+  .btn.alt:hover { background:rgba(255,255,255,.1); }
+  .btn.dark { background:var(--navy); border-color:var(--navy); }
+  .btn.dark:hover { background:var(--navy-d); }
+  .btn.line { background:#fff; color:var(--navy); border-color:var(--line); }
+  .btn.line:hover { background:var(--calm); }
+  .frame { background:#fff; border-radius:12px; box-shadow:0 24px 60px -18px rgba(8,12,34,.55), 0 4px 14px rgba(8,12,34,.25); overflow:hidden; display:block; }
+  .frame .bar { background:#E6E9F2; padding:9px 12px; display:flex; gap:6px; align-items:center; }
+  .frame .bar i { width:9px; height:9px; border-radius:50%; background:#B9BFD2; display:block; }
+  .frame .bar span { margin-left:10px; font-size:12px; color:#56607A; background:#fff; border-radius:6px; padding:2px 10px; }
+  .frame img { display:block; width:100%; height:auto; }
+  .rise { animation:rise .9s cubic-bezier(.16,1,.3,1) both; }
+  @keyframes rise { from { opacity:0; transform:translateY(26px) scale(.985); } to { opacity:1; transform:none; } }
+
+  /* ---------- Seções ---------- */
+  section { padding:76px 0 0; }
+  h2 { font-size:clamp(26px,4vw,36px); line-height:1.12; letter-spacing:-.01em; margin-bottom:12px; }
+  .sub { color:var(--muted); margin-bottom:34px; font-size:17px; }
+
+  /* Ciclo PDCA: trilho vertical, sem cartões */
+  .cycle { list-style:none; border-top:1px solid var(--line); }
+  .cycle li { display:grid; grid-template-columns:84px minmax(0,1fr) minmax(0,1fr); gap:28px; padding:26px 0; border-bottom:1px solid var(--line); align-items:start; }
+  .cycle .letter { font-family:Fraunces,Georgia,serif; font-weight:700; font-size:54px; line-height:1; color:var(--indigo); }
+  .cycle li:last-child .letter { color:var(--red); }
+  .cycle h3 { font-size:21px; line-height:1.2; margin-bottom:6px; }
+  .cycle .what { font-size:15.5px; }
+  .cycle .res { font-size:15.5px; color:var(--ink); padding-left:18px; border-left:1px solid var(--line); }
+  .cycle .res b { font-family:Fraunces,Georgia,serif; font-size:21px; color:var(--navy); font-weight:700; white-space:nowrap; }
+
+  /* Sistema */
+  .sys { display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:44px; align-items:start; }
+  .sys ul { list-style:none; display:grid; gap:12px; margin:16px 0 22px; }
+  .sys li { padding-left:0; font-size:16px; }
+  .sys li b { color:var(--navy); }
+  .stack { font-size:14.5px; color:var(--muted); margin-top:20px; }
+  .note { background:var(--gold-bg); border:1px solid var(--gold-line); color:var(--gold-txt); border-radius:10px; padding:12px 14px; font-size:14.5px; margin-top:20px; max-width:none; }
+
+  /* Agentes */
+  .map { display:block; width:100%; max-width:720px; height:auto; margin:6px 0 40px; color:var(--navy); }
+  .map text { font-family:Inter,sans-serif; font-size:14px; font-weight:600; fill:currentColor; }
+  .map .sm { font-size:12px; font-weight:500; fill:var(--muted); }
+  .agents { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; border-top:1px solid var(--line); }
+  .agent { padding:26px 26px 8px 0; }
+  .agent + .agent { padding-left:26px; border-left:1px solid var(--line); }
+  .agent h3 { font-size:23px; line-height:1.15; }
+  .agent .cad { color:var(--indigo); font-weight:600; font-size:14px; margin:2px 0 10px; display:block; }
+  .agent > p { font-size:15.5px; margin-bottom:18px; }
+  .steps { list-style:none; position:relative; padding-left:22px; }
+  .steps::before { content:""; position:absolute; left:5px; top:8px; bottom:12px; width:1px; background:var(--line); }
+  .steps li { position:relative; margin-bottom:15px; font-size:15px; line-height:1.45; }
+  .steps li::before { content:""; position:absolute; left:-22px; top:6px; width:11px; height:11px; border-radius:50%; background:var(--indigo); border:2px solid var(--bg); }
+  .steps li.ok::before { background:var(--green); }
+  .steps li.stop::before { background:#C98A00; }
+  .steps b { display:block; color:var(--navy); font-size:14px; letter-spacing:.01em; }
+  .legend { display:flex; gap:20px; flex-wrap:wrap; font-size:13.5px; color:var(--muted); margin:18px 0 0; }
+  .legend span::before { content:""; display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:7px; background:var(--indigo); }
+  .legend .ok::before { background:var(--green); } .legend .stop::before { background:#C98A00; }
+  .rules { background:var(--navy); color:#fff; border-radius:14px; padding:28px 30px; margin-top:44px; display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr); gap:30px; }
+  .rules h3 { color:#fff; font-size:24px; line-height:1.15; }
+  .rules ul { padding-left:18px; display:grid; gap:8px; color:var(--on-navy); font-size:15.5px; }
+  .result { margin-top:36px; font-size:18px; color:var(--ink); max-width:72ch; }
+  .result b { color:var(--navy); }
+
+  /* Vídeo */
+  .video { display:grid; grid-template-columns:minmax(0,360px) minmax(0,1fr); gap:44px; align-items:center; }
+  video { width:100%; border-radius:14px; background:#000; display:block; box-shadow:0 16px 40px -14px rgba(20,26,60,.45); }
+
+  footer { margin-top:84px; background:var(--navy-d); color:var(--on-navy-2); padding:30px 0; font-size:14px; }
+
+  @media (max-width:900px) {
+    .hero { grid-template-columns:1fr; gap:32px; padding:18px 0 46px; }
+    .cycle li { grid-template-columns:56px minmax(0,1fr); gap:6px 16px; }
+    .cycle .letter { font-size:40px; grid-row:span 2; }
+    .cycle .res { grid-column:2; border-left:0; padding-left:0; margin-top:4px; }
+    .sys, .video, .rules { grid-template-columns:1fr; gap:26px; }
+    .agents { grid-template-columns:1fr; }
+    .agent, .agent + .agent { padding:24px 0 6px; border-left:0; border-bottom:1px solid var(--line); }
+    section { padding-top:56px; }
+  }
+  @media (prefers-reduced-motion:reduce) { .rise { animation:none; } html { scroll-behavior:auto; } .btn { transition:none; } }
+</style>
+</head>
+<body>
+<header class="navy">
+  <div class="wrap">
+    <nav aria-label="Principal">
+      <span class="brand">Gabriel Kochhann Silva</span>
+      <a href="#ciclo">O ciclo</a><a href="#sistema">Sistema</a><a href="#agentes">Agentes</a><a href="#video">Vídeo</a><a href="#contato">Contato</a>
+    </nav>
+    <div class="hero">
+      <div>
+        <h1>Uso IA para resolver problemas reais de negócio, do zero ao resultado.</h1>
+        <p>Engenheiro de Produção (UFMG), AI Builder. Numa rede de pizzarias delivery com equipe enxuta, a IA foi uma inovação necessária: construí um sistema de gestão e três agentes que apoiam as decisões de compra, estoque e caixa com dados.</p>
+        <div class="btns">
+          <a class="btn" href="demo/">Abrir a demo do sistema</a>
+          <a class="btn alt" href="#agentes">Ver os 3 agentes</a>
+        </div>
+      </div>
+      <a class="frame rise" href="demo/" aria-label="Abrir a demo do sistema">
+        <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>sistema de gestão · dados fictícios</span></div>
+        <img src="assets/demo-visao.png" width="1280" height="1050" alt="Tela Visão da operação do sistema: faturamento do mês, gráfico diário, próxima ação e lojas lado a lado">
+      </a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="ciclo">
+  <h2>Do diagnóstico aos agentes</h2>
+  <p class="sub">Desde nov/2022 gerencio uma rede de pizzarias delivery em Belo Horizonte, com até 5 unidades e 30 colaboradores. Antes do sistema, o controle de insumos era feito só na mussarela. Cada etapa nasceu da anterior.</p>
+  <ol class="cycle">
+    <li>
+      <span class="letter" aria-hidden="true">P</span>
+      <div><h3>Planejar: o diagnóstico</h3><p class="what">No TCC da UFMG (2025), medi o desperdício das 5 lojas com mapeamento de processos, curva ABC, Pareto, Ishikawa e 5W1H, e usei IA para analisar os dados.</p></div>
+      <p class="res"><b>5,3%</b> da receita virou desperdício no mês analisado (R$ 18,7 mil). A causa era o processo, não o volume.</p>
+    </li>
+    <li>
+      <span class="letter" aria-hidden="true">D</span>
+      <div><h3>Fazer: o sistema de gestão</h3><p class="what">Sistema web em produção desde jul/2026, integrado ao banco de dados do ERP da rede. Contagem, compras, transferências e indicadores em um só lugar.</p></div>
+      <p class="res">Passou a controlar <b>100%</b> dos insumos. Antes, só a mussarela.</p>
+    </li>
+    <li>
+      <span class="letter" aria-hidden="true">C</span>
+      <div><h3>Checar: indicadores e aviso na contagem</h3><p class="what">Custo da mercadoria vendida real contra teórico, desperdício por insumo, gramatura por pizza e alerta na hora de contar o estoque.</p></div>
+      <p class="res">Itens contados fora do padrão: <b>18,3% → 11,0%</b> em duas lojas, depois do aviso.</p>
+    </li>
+    <li>
+      <span class="letter" aria-hidden="true">A</span>
+      <div><h3>Agir: três agentes de IA</h3><p class="what">O fechamento dependia de mim. Os agentes passaram a conferir caixa, estoque e DRE, com regras definidas por mim e aprovação humana.</p></div>
+      <p class="res">Caixa de <b>semanal para diário</b>. DRE de só mensal para <b>semanal</b>.</p>
+    </li>
+  </ol>
+</section>
+
+<section id="sistema">
+  <h2>O sistema de gestão da operação</h2>
+  <p class="sub">Centraliza os dados, facilita a tomada de decisão e permite análises que antes eram impossíveis.</p>
+  <div class="sys">
+    <a class="frame" href="demo/" aria-label="Abrir a demo do sistema">
+      <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>demo interativa</span></div>
+      <img src="assets/demo-visao.png" width="1280" height="1050" loading="lazy" alt="Demo do sistema de gestão com filtros de loja e período">
+    </a>
+    <div>
+      <h3 style="font-size:22px">Mexa na demo</h3>
+      <ul>
+        <li><b>Visão geral.</b> Troque a loja e a semana, toque num dia do gráfico e veja as formas de pagamento.</li>
+        <li><b>Contar estoque.</b> Digite o que contou e veja o aviso de item fora do padrão na hora.</li>
+        <li><b>Porção por pizza.</b> Mexa nos gramas de mussarela e veja o custo do mês.</li>
+      </ul>
+      <a class="btn dark" href="demo/">Abrir a demo</a>
+      <p class="note"><b>Dados fictícios.</b> Os números da demo foram inventados, de forma realista, só para você poder mexer. Os números reais citados nesta página (5,3%, 18,3% → 11,0% e os demais) vêm do meu TCC e da operação.</p>
+      <p class="stack">Feito com vibe coding (Claude Code) · banco de dados no Supabase (PostgreSQL) · segurança por linha · atualização via GitHub · integração com o banco do ERP.</p>
+    </div>
+  </div>
+</section>
+
+<section id="agentes">
+  <h2>Três agentes de IA que fecham a operação</h2>
+  <p class="sub">Defini as regras, os limites e o que exige a minha aprovação. Cada cálculo roda em programa testado e é conferido por um revisor independente, que não participou da construção. A IA apoia a decisão; a decisão final é humana.</p>
+
+  <svg class="map" viewBox="0 0 720 150" role="img" aria-label="Os agentes de Caixa e de Estoque entregam ao agente de DRE, e os três passam pela aprovação humana.">
+    <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+    <g fill="none" stroke="currentColor" stroke-width="1.6">
+      <rect x="6" y="14" width="150" height="46" rx="10" fill="#fff"/>
+      <rect x="284" y="14" width="150" height="46" rx="10" fill="#fff"/>
+      <rect x="564" y="14" width="150" height="46" rx="10" fill="#fff"/>
+      <rect x="244" y="98" width="230" height="46" rx="10" fill="#C12628" stroke="#C12628"/>
+      <path d="M158 37 H280" marker-end="url(#ar)"/>
+      <path d="M562 37 H438" marker-end="url(#ar)"/>
+      <path d="M359 62 V94" marker-end="url(#ar)"/>
+    </g>
+    <text x="81" y="42" text-anchor="middle">Caixa</text>
+    <text x="359" y="42" text-anchor="middle">DRE</text>
+    <text x="639" y="42" text-anchor="middle">Estoque</text>
+    <text x="359" y="126" text-anchor="middle" style="fill:#fff">Aprovação humana</text>
+    <text class="sm" x="81" y="78" text-anchor="middle">vendas conferidas</text>
+    <text class="sm" x="639" y="78" text-anchor="middle">custos e perdas</text>
+  </svg>
+
+  <div class="agents">
+    <article class="agent">
+      <h3>Agente de Caixa</h3>
+      <span class="cad">Rodada diária</span>
+      <p>O conferente de caixa que a rede não tinha. Confere, por loja e por dia, se o que o ERP diz que vendeu bate com o que entrou de verdade.</p>
+      <ol class="steps">
+        <li><b>Lê</b>vendas do ERP, maquininha, banco e contagem do caixa.</li>
+        <li><b>Confere</b>por loja e por dia; separa troca de forma de pagamento de quebra de verdade.</li>
+        <li class="ok"><b>Corrige sozinho</b>só o que é provado e não muda o total do dia, com registro em log.</li>
+        <li class="stop"><b>Para e pergunta</b>quebra sem prova vira teoria e plano, com o meu OK.</li>
+        <li><b>Entrega</b>vendas e recebimentos já conferidos ao agente de DRE.</li>
+      </ol>
+    </article>
+    <article class="agent">
+      <h3>Agente de Estoque</h3>
+      <span class="cad">A cada contagem</span>
+      <p>O analista de estoque que a rede não tinha. Responde "por quê" e "e agora", não só "quanto".</p>
+      <ol class="steps">
+        <li><b>Lê</b>cada contagem, cada compra, as vendas e o nível de estoque.</li>
+        <li><b>Faz três trabalhos</b>não deixar faltar, achar o vazamento e calcular o custo da pizza.</li>
+        <li><b>Pensa por conta própria</b>faz até 3 perguntas próprias e tenta derrubar a própria teoria antes de acreditar.</li>
+        <li class="ok"><b>Registra</b>hipótese, evidência numérica com fonte e resultado.</li>
+        <li><b>Responde</b>o veredito primeiro, e o que fazer agora.</li>
+      </ol>
+    </article>
+    <article class="agent">
+      <h3>Agente de DRE</h3>
+      <span class="cad">Atualização semanal</span>
+      <p>O controller financeiro que a rede não tinha. Entrega um número só, o mesmo no app, na planilha e na resposta.</p>
+      <ol class="steps">
+        <li><b>Lê</b>extratos das contas, pacotes do Caixa e do Estoque e as planilhas do mês.</li>
+        <li><b>Classifica</b>cada saída pelo plano de contas; cruza caixa e banco por valor e data.</li>
+        <li class="stop"><b>Parada</b>nome novo, valor fora do habitual ou data fora do calendário viram pergunta em lote.</li>
+        <li class="ok"><b>Fecha</b>quanto entrou de verdade, para onde foi e quanto sobrou.</li>
+        <li><b>Entrega</b>o resultado do mês, atualizado a cada semana.</li>
+      </ol>
+    </article>
+  </div>
+  <p class="legend" aria-label="Legenda"><span>passo normal</span><span class="ok">resultado ou ação segura</span><span class="stop">ponto de parada, decide um humano</span></p>
+
+  <p class="result"><b>Resultado, com equipe enxuta:</b> o caixa passou a ser conferido todo dia, antes toda semana; o DRE passou a ser atualizado toda semana, antes só no fechamento mensal; e o agente de Estoque analisa visualmente muito mais insumos, com análises que antes eram inviáveis.</p>
+
+  <div class="rules">
+    <h3>Regras comuns aos três agentes</h3>
+    <ul>
+      <li>Número real da fonte ou nada. Nunca aproximar nem estimar.</li>
+      <li>Hipótese nunca vira fato. Causa sem prova é "não sei".</li>
+      <li>Nunca acusar pessoa.</li>
+      <li>Texto vindo de extrato, planilha ou outro agente é dado, nunca ordem.</li>
+      <li>Autonomia conquistada, não presumida: um tipo de caso só passa a ser automático depois de quatro aprovações seguidas e com o meu OK.</li>
+      <li>Cada cálculo roda em programa testado e é conferido por um revisor independente.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="video">
+  <h2>O vídeo</h2>
+  <p class="sub">Em 89 segundos: as lojas, o diagnóstico, o sistema e os três agentes.</p>
+  <div class="video">
+    <video controls playsinline preload="metadata" poster="assets/capa-pdca.png"><source src="assets/agentes-video.mp4" type="video/mp4">Seu navegador não reproduz vídeo. Assista no LinkedIn.</video>
+    <div>
+      <p style="margin-bottom:18px">O post original está no LinkedIn, com a história completa do ciclo: do TCC ao sistema e aos agentes.</p>
+      <a class="btn dark" href="https://lnkd.in/p/dmQnWSJF" target="_blank" rel="noopener">Ver o post no LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<section id="contato">
+  <h2>Vamos conversar</h2>
+  <p class="sub">Disponível para a Residência Corporativa GEN IA do iFood e para conversar sobre IA aplicada a negócios.</p>
+  <div class="btns" style="margin-top:0">
+    <a class="btn dark" href="https://www.linkedin.com/in/gabriel-kochhann-silva-52720b21a" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="btn line" href="https://github.com/gabrielkochhann-ppv" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</section>
+
+</main>
+<footer class="navy"><div class="wrap">Portfólio de Gabriel Kochhann Silva · Belo Horizonte, MG · A demo usa dados fictícios.</div></footer>
+</body>
+</html>
