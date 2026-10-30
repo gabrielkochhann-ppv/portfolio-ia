@@ -10,29 +10,30 @@
 <style>
   :root {
     --navy:#21294E; --navy-d:#171D38; --indigo:#4054B2; --indigo-d:#35479A; --red:#C12628; --red-bg:#FBE8E8;
-    --gold:#E0A400; --gold-bg:#FFF5D8; --gold-txt:#8A6408; --ok:#1F7A4D; --ok-bg:#E4F4EC;
-    --ink:#1B2033; --muted:#69727D; --faint:#667085; --line:#DCDEE7; --calm:#EEF0F5; --bg:#F5F6FA; --card:#fff;
+    --gold:#E0A400; --gold-bg:#FFF5D8; --gold-txt:#7A5800; --ok:#1F7A4D; --ok-bg:#E4F4EC;
+    --ink:#1B2033; --muted:#59616F; --faint:#667085; --line:#DCDEE7; --calm:#EEF0F5; --bg:#F5F6FA; --card:#fff;
   }
   * { box-sizing:border-box; margin:0; padding:0; }
-  body { font-family:Inter,system-ui,sans-serif; font-size:14px; color:var(--ink); background:var(--bg); line-height:1.4; }
+  body { font-family:Inter,system-ui,sans-serif; font-size:14px; color:var(--ink); background:var(--bg); line-height:1.4; font-variant-numeric:tabular-nums; }
+  ::selection { background:var(--indigo); color:#fff; }
   button,input,select { font:inherit; color:inherit; }
+  :focus-visible { outline:3px solid var(--indigo); outline-offset:2px; }
+  aside :focus-visible { outline-color:#fff; }
   .shell { display:flex; min-height:100vh; }
-  aside { width:220px; background:var(--navy); color:#fff; padding:16px 12px; position:sticky; top:0; height:100vh; flex-shrink:0; }
+  aside { width:224px; background:var(--navy); color:#fff; padding:16px 12px; position:sticky; top:0; height:100vh; overflow-y:auto; flex-shrink:0; }
   aside img { width:84px; display:block; margin:0 auto 10px; border-radius:8px; background:#fff; padding:4px; }
-  .sec { font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:#8d97c4; margin:16px 8px 6px; }
-  .nav { display:block; width:100%; text-align:left; background:none; border:0; color:#dfe3f5; padding:9px 10px; border-radius:8px; cursor:pointer; font-size:13.5px; }
+  .sec { font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:#A7B0DA; margin:16px 8px 6px; }
+  .nav { display:block; width:100%; text-align:left; background:none; border:0; color:#E3E6F6; padding:8px 10px; border-radius:8px; cursor:pointer; font-size:13.5px; }
   .nav:hover { background:rgba(255,255,255,.07); }
   .nav.on { background:rgba(255,255,255,.14); color:#fff; font-weight:600; box-shadow:inset 3px 0 0 var(--red); }
-  .nav.off { opacity:.45; cursor:default; }
   main { flex:1; min-width:0; }
   .fict { background:var(--gold-bg); color:var(--gold-txt); border-bottom:1px solid #f0d78a; padding:9px 24px; font-size:13px; display:flex; gap:8px; align-items:center; }
-  .fict b { color:#6b4c04; }
+  .fict b { color:#5c4100; }
   .wrap { padding:22px 24px 40px; max-width:1180px; margin:0 auto; }
-  .eyebrow { font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); }
-  h1 { font-family:Fraunces,Georgia,serif; font-size:28px; color:var(--navy); margin:2px 0 4px; }
-  .lead { color:var(--muted); margin-bottom:14px; }
+  h1 { font-family:Fraunces,Georgia,serif; font-size:28px; color:var(--navy); margin:2px 0 4px; text-wrap:balance; }
+  .lead { color:var(--muted); margin-bottom:14px; max-width:70ch; }
   .bar { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:10px 0 16px; }
-  .seg { display:inline-flex; background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+  .seg { display:inline-flex; background:#fff; border:1px solid var(--line); border-radius:8px; overflow:hidden; flex-wrap:wrap; }
   .seg button { background:none; border:0; padding:7px 13px; cursor:pointer; color:var(--muted); }
   .seg button.on { background:var(--calm); color:var(--indigo); font-weight:600; }
   .grid { display:grid; gap:12px; }
@@ -41,59 +42,68 @@
   .k-l { font-size:12.5px; color:var(--muted); }
   .k-v { font-family:Fraunces,Georgia,serif; font-size:26px; font-weight:700; color:var(--navy); margin:2px 0; }
   .k-s { font-size:12px; color:var(--faint); }
-  .k-v.red { color:var(--red); }
+  .k-v.red { color:var(--red); } .k-v.ok { color:var(--ok); }
   .two { grid-template-columns:2fr 1fr; margin-top:12px; }
+  .even { grid-template-columns:1fr 1fr; margin-top:12px; }
   .h2 { font-family:Fraunces,Georgia,serif; font-size:18px; color:var(--navy); margin-bottom:8px; }
   svg text { font-family:Inter,sans-serif; font-size:11px; fill:var(--faint); }
   .dark { background:var(--navy); color:#fff; border:0; display:flex; flex-direction:column; gap:10px; }
-  .dark .eyebrow { color:#aab3de; }
   .dark h3 { font-family:Fraunces,Georgia,serif; font-size:21px; line-height:1.2; }
   .dark .big { font-size:40px; font-family:Fraunces,serif; font-weight:700; }
-  .dark ul { list-style:none; display:grid; gap:8px; font-size:13px; color:#dfe3f5; }
+  .dark ul { list-style:none; display:grid; gap:8px; font-size:13px; color:#E3E6F6; }
   .dark li { background:rgba(255,255,255,.08); border-radius:8px; padding:8px 10px; }
   table { width:100%; border-collapse:collapse; }
   th { text-align:right; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); font-weight:600; padding:6px 8px; border-bottom:1px solid var(--line); }
-  td { text-align:right; padding:9px 8px; border-bottom:1px solid var(--calm); font-variant-numeric:tabular-nums; }
+  td { text-align:right; padding:9px 8px; border-bottom:1px solid var(--calm); }
   th:first-child, td:first-child { text-align:left; }
   tr.click { cursor:pointer; }
   tr.click:hover td { background:#FAFAFD; }
-  .tag { display:inline-block; font-size:11.5px; padding:2px 8px; border-radius:999px; }
+  tr.tot td { font-weight:700; border-top:1px solid var(--line); border-bottom:0; }
+  .tag { display:inline-block; font-size:11.5px; padding:2px 8px; border-radius:999px; white-space:nowrap; }
   .tag.ok { background:var(--ok-bg); color:var(--ok); }
   .tag.bad { background:var(--red-bg); color:var(--red); }
   .tag.warn { background:var(--gold-bg); color:var(--gold-txt); }
-  .bars .row { display:grid; grid-template-columns:110px 1fr 90px; gap:8px; align-items:center; margin:7px 0; font-size:13px; }
+  .bars .row { display:grid; grid-template-columns:130px 1fr 110px; gap:8px; align-items:center; margin:7px 0; font-size:13px; }
   .bars .track { background:var(--calm); height:10px; border-radius:6px; overflow:hidden; }
   .bars .fill { background:var(--indigo); height:100%; border-radius:6px; }
+  .bars .fill.neg { background:var(--red); } .bars .fill.pos { background:#C98A00; }
   .note { font-size:12px; color:var(--faint); margin-top:8px; }
-  .btn { background:var(--indigo); color:#fff; border:0; border-radius:8px; padding:8px 14px; cursor:pointer; font-weight:600; }
+  .btn { background:var(--indigo); color:#fff; border:0; border-radius:8px; padding:9px 16px; cursor:pointer; font-weight:600; }
+  .btn:hover { background:var(--indigo-d); }
   .btn.ghost { background:#fff; color:var(--indigo); border:1px solid var(--line); }
-  input[type=number] { width:100px; padding:6px 8px; border:1px solid var(--line); border-radius:6px; text-align:right; background:#fff; }
-  input[type=number].bad { border-color:var(--red); background:var(--red-bg); }
-  input[type=number].warn { border-color:var(--gold); background:var(--gold-bg); }
+  .btn.ghost:hover { background:var(--calm); }
+  input[type=number], input[type=text] { width:100px; padding:6px 8px; border:1px solid var(--line); border-radius:6px; text-align:right; background:#fff; }
+  input.bad { border-color:var(--red); background:var(--red-bg); }
+  input.warn { border-color:var(--gold); background:var(--gold-bg); }
   input[type=range] { width:100%; accent-color:var(--indigo); }
   select { padding:7px 10px; border:1px solid var(--line); border-radius:8px; background:#fff; }
+  .form { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; align-items:end; }
+  .form label { display:grid; gap:4px; font-size:12.5px; color:var(--muted); }
+  .form input, .form select { width:100%; text-align:left; }
+  .msg { margin-top:10px; font-size:13.5px; padding:9px 12px; border-radius:8px; }
+  .msg.ok { background:var(--ok-bg); color:var(--ok); } .msg.bad { background:var(--red-bg); color:var(--red); }
   .detail { margin-top:12px; }
   .hide { display:none; }
   .res { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:12px; }
   .res .card .k-v { font-size:22px; }
   .stores { margin-top:12px; }
   .foot { margin-top:26px; color:var(--faint); font-size:12px; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; }
-  .top-m { display:none; }
   @media (max-width:900px) {
     .shell { flex-direction:column; }
-    aside { width:100%; height:auto; position:static; display:flex; flex-wrap:wrap; align-items:center; gap:4px; padding:10px; }
-    aside img { width:46px; margin:0 8px 0 0; }
+    aside { width:100%; height:auto; position:static; display:flex; flex-wrap:wrap; align-items:center; gap:2px; padding:10px; overflow:visible; }
+    aside img { width:44px; margin:0 8px 0 0; }
     .sec { display:none; }
-    .nav { width:auto; padding:8px 12px; }
+    .nav { width:auto; padding:8px 11px; }
     .nav.on { box-shadow:none; }
-    .nav.off { display:none; }
     .kpis { grid-template-columns:repeat(2,1fr); }
-    .two { grid-template-columns:1fr; }
+    .two, .even { grid-template-columns:1fr; }
     .res { grid-template-columns:1fr; }
+    .form { grid-template-columns:1fr 1fr; }
     .wrap { padding:16px 14px 36px; }
     .fict { padding:9px 14px; }
-    .bars .row { grid-template-columns:90px 1fr 70px; }
+    .bars .row { grid-template-columns:96px 1fr 84px; }
     .scroll { overflow-x:auto; }
+    .scroll table { min-width:620px; }
   }
 </style>
 </head>
@@ -103,10 +113,17 @@
     <img src="../assets/logo.png" alt="Pizza Para Você">
     <div class="sec">Acompanhar</div>
     <button class="nav on" data-tab="visao">Visão geral</button>
+    <button class="nav" data-tab="caixa">Caixa do mês</button>
+    <button class="nav" data-tab="pizzas">Pizzas por dia</button>
+    <button class="nav" data-tab="estoque">Estoque e CMV</button>
+    <button class="nav" data-tab="planejar">Planejar compras</button>
     <div class="sec">Registrar</div>
     <button class="nav" data-tab="contagem">Contar estoque</button>
-    <div class="sec">Análise</div>
+    <button class="nav" data-tab="compra">Registrar compra</button>
+    <button class="nav" data-tab="transf">Transferir produtos</button>
+    <div class="sec">Análise e ajustes</div>
     <button class="nav" data-tab="porcao">Porção por pizza</button>
+    <button class="nav" data-tab="fichas">Fichas e insumos</button>
   </aside>
   <main>
     <div class="fict" role="note"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg><span><b>Dados fictícios.</b> Todos os números desta demonstração foram inventados para você poder mexer. Nenhum valor é real.</span></div>
@@ -119,33 +136,23 @@
         <div class="bar">
           <select id="loja" aria-label="Loja">
             <option value="all">Todas as lojas</option>
-            <option value="Buritis">Buritis</option>
-            <option value="Planalto">Planalto</option>
-            <option value="Venda Nova">Venda Nova</option>
+            <option value="Buritis">Buritis</option><option value="Planalto">Planalto</option><option value="Venda Nova">Venda Nova</option>
           </select>
           <div class="seg" id="semana" role="group" aria-label="Período">
-            <button data-p="mes" class="on">Mês inteiro</button>
-            <button data-p="s1">1ª semana</button>
-            <button data-p="s2">2ª</button>
-            <button data-p="s3">3ª</button>
-            <button data-p="s4">4ª</button>
+            <button data-p="mes" class="on">Mês inteiro</button><button data-p="s1">1ª semana</button><button data-p="s2">2ª</button><button data-p="s3">3ª</button><button data-p="s4">4ª</button>
           </div>
           <span class="note" style="margin:0">mês fictício: set/26</span>
         </div>
-
         <div class="grid kpis">
           <div class="card"><div class="k-l">Faturamento</div><div class="k-v" id="k-fat">-</div><div class="k-s" id="k-fat-s"></div></div>
           <div class="card"><div class="k-l">Pizzas vendidas</div><div class="k-v" id="k-piz">-</div><div class="k-s">todas as formas de venda</div></div>
           <div class="card"><div class="k-l">Faturamento por pizza</div><div class="k-v" id="k-tk">-</div><div class="k-s">faturamento ÷ pizzas</div></div>
-          <div class="card"><div class="k-l">Itens fora do padrão</div><div class="k-v" id="k-fora">-</div><div class="k-s">na última contagem (aba Contar estoque)</div></div>
+          <div class="card"><div class="k-l">Itens fora do padrão</div><div class="k-v" id="k-fora">-</div><div class="k-s">na última contagem</div></div>
         </div>
-
         <div class="grid two">
           <div class="card">
             <div class="h2">O ritmo da operação</div>
-            <div class="bar" style="margin:0 0 6px">
-              <div class="seg" id="metrica"><button data-m="fat" class="on">Faturamento</button><button data-m="piz">Pizzas</button></div>
-            </div>
+            <div class="bar" style="margin:0 0 6px"><div class="seg" id="metrica"><button data-m="fat" class="on">Faturamento</button><button data-m="piz">Pizzas</button></div></div>
             <svg id="chart" viewBox="0 0 640 230" width="100%" role="img" aria-label="Gráfico diário"></svg>
             <div class="note">Toque num dia para abrir o detalhe: formas de pagamento.</div>
           </div>
@@ -156,23 +163,58 @@
             <ul id="acao-l"></ul>
           </div>
         </div>
-
         <div class="card detail hide" id="detalhe"></div>
-
         <div class="card stores">
           <div class="h2">Sua rede, lado a lado</div>
-          <div class="scroll"><table id="lojas">
-            <thead><tr><th>Loja</th><th>Faturamento</th><th>Pizzas</th><th>Fat. por pizza</th><th>Participação</th></tr></thead>
-            <tbody></tbody>
-          </table></div>
+          <div class="scroll"><table id="lojas"><thead><tr><th>Loja</th><th>Faturamento</th><th>Pizzas</th><th>Fat. por pizza</th><th>Participação</th></tr></thead><tbody></tbody></table></div>
         </div>
-
         <div class="grid two">
           <div class="card bars"><div class="h2">Sabores mais vendidos</div><div id="sabores"></div><div class="note">Mix fictício. Meia pizza conta 0,5.</div></div>
-          <div class="card"><div class="h2">Como ler esta demo</div>
-            <p style="font-size:13px;color:var(--muted)">Troque a loja e a semana, toque num dia do gráfico e depois abra <b>Contar estoque</b>: o que você digitar lá muda o aviso de <b>Próxima ação</b> e o cartão de itens fora do padrão.</p>
-          </div>
+          <div class="card"><div class="h2">Como ler esta demo</div><p style="font-size:13px;color:var(--muted)">Use o menu para percorrer o sistema inteiro. Tudo está ligado: o que você digitar em <b>Contar estoque</b>, <b>Registrar compra</b> ou <b>Transferir produtos</b> muda <b>Estoque e CMV</b>, <b>Planejar compras</b> e o aviso de <b>Próxima ação</b>.</p></div>
         </div>
+      </section>
+
+      <!-- CAIXA DO MÊS -->
+      <section id="caixa" class="hide">
+        <h1>Caixa do mês</h1>
+        <p class="lead">Quanto entra, quanto sai e em que semana, pelo vencimento do boleto e não pela data da compra. Toque numa semana para ver o que vence nela.</p>
+        <div class="bar"><select id="loja-cx" aria-label="Loja"><option value="all">Todas as lojas</option><option value="Buritis">Buritis</option><option value="Planalto">Planalto</option><option value="Venda Nova">Venda Nova</option></select></div>
+        <div class="card"><div class="scroll"><table id="tcx"><thead><tr><th>Semana</th><th>Entradas</th><th>Boletos de fornecedores</th><th>Despesas fixas</th><th>Saldo da semana</th><th>Saldo acumulado</th></tr></thead><tbody></tbody></table></div></div>
+        <div class="card detail hide" id="cx-det"></div>
+        <div class="res">
+          <div class="card"><div class="k-l">Entradas do mês</div><div class="k-v" id="cx-ent">-</div><div class="k-s">faturamento pelas formas de pagamento</div></div>
+          <div class="card"><div class="k-l">Saldo de caixa do mês</div><div class="k-v" id="cx-saldo">-</div><div class="k-s">entradas − boletos − despesas</div></div>
+          <div class="card"><div class="k-l">CMV de consumo (fora do caixa)</div><div class="k-v" id="cx-cmv">-</div><div class="k-s">consumo pela ficha × preço: indicador de eficiência, não entra na conta de caixa</div></div>
+        </div>
+      </section>
+
+      <!-- PIZZAS POR DIA -->
+      <section id="pizzas" class="hide">
+        <h1>Pizzas por dia</h1>
+        <p class="lead">Uma régua só para o número de pizzas, em todas as telas. Veja o ritmo da semana e planeje a produção.</p>
+        <div class="bar"><select id="loja-pz" aria-label="Loja"><option value="all">Todas as lojas</option><option value="Buritis">Buritis</option><option value="Planalto">Planalto</option><option value="Venda Nova">Venda Nova</option></select></div>
+        <div class="card"><div class="h2">Pizzas em cada dia do mês</div><svg id="pz-chart" viewBox="0 0 720 220" width="100%" role="img" aria-label="Pizzas por dia"></svg></div>
+        <div class="card" style="margin-top:12px"><div class="h2">Média por dia da semana</div><div class="scroll"><table id="tpz"><thead><tr><th>Dia da semana</th><th>Média de pizzas</th><th>Melhor dia</th><th>Contra a média do mês</th></tr></thead><tbody></tbody></table></div></div>
+      </section>
+
+      <!-- ESTOQUE E CMV -->
+      <section id="estoque" class="hide">
+        <h1>Estoque e CMV</h1>
+        <p class="lead">O que está na prateleira, quanto custou de verdade cada pizza e onde o estoque escapou. Tudo parte da última contagem da loja.</p>
+        <div class="bar">
+          <select id="loja-es" aria-label="Loja"><option value="Buritis">Buritis</option><option value="Planalto">Planalto</option><option value="Venda Nova">Venda Nova</option></select>
+          <div class="seg" id="es-abas"><button data-e="posicao" class="on">Posição</button><button data-e="cmv">CMV real × teórico</button><button data-e="desvio">Desvio por insumo</button><button data-e="cobertura">Cobertura</button><button data-e="abc">Prioridade ABC</button></div>
+        </div>
+        <div id="es-corpo"></div>
+      </section>
+
+      <!-- PLANEJAR COMPRAS -->
+      <section id="planejar" class="hide">
+        <h1>Planejar compras</h1>
+        <p class="lead">Quanto pedir de cada insumo para chegar ao alvo de cobertura, olhando o consumo do mês e o prazo de entrega do fornecedor.</p>
+        <div class="bar"><select id="loja-pl" aria-label="Loja"><option value="Buritis">Buritis</option><option value="Planalto">Planalto</option><option value="Venda Nova">Venda Nova</option></select></div>
+        <div class="card"><label for="alvo" style="font-weight:600">Cobertura desejada: <span id="alvo-v">10</span> dias</label><input type="range" id="alvo" min="3" max="20" step="1" value="10" aria-label="Cobertura desejada em dias"></div>
+        <div class="card" style="margin-top:12px"><div class="scroll"><table id="tpl"><thead><tr><th>Insumo</th><th>Consumo por dia</th><th>Em estoque</th><th>Cobertura (dias)</th><th>Prazo de entrega</th><th>Sugestão de compra</th><th>Valor</th><th>Situação</th></tr></thead><tbody></tbody></table></div></div>
       </section>
 
       <!-- CONTAGEM -->
@@ -180,16 +222,11 @@
         <h1>Contar estoque</h1>
         <p class="lead">Digite o que você contou. O sistema compara com o que a ficha técnica diz que deveria ter e avisa na hora.</p>
         <div class="bar">
-          <select id="loja2" aria-label="Loja da contagem">
-            <option value="Buritis">Buritis</option><option value="Planalto">Planalto</option><option value="Venda Nova">Venda Nova</option>
-          </select>
+          <select id="loja2" aria-label="Loja da contagem"><option value="Buritis">Buritis</option><option value="Planalto">Planalto</option><option value="Venda Nova">Venda Nova</option></select>
           <button class="btn ghost" id="reset-c">Voltar aos valores de exemplo</button>
           <span class="note" style="margin:0">Regra desta demo: fora do padrão = diferença maior que 5% do esperado.</span>
         </div>
-        <div class="card"><div class="scroll"><table id="tcont">
-          <thead><tr><th>Insumo</th><th>Estoque anterior</th><th>Compras</th><th>Consumo pela ficha</th><th>Esperado</th><th>Contado</th><th>Diferença</th><th>Situação</th></tr></thead>
-          <tbody></tbody>
-        </table></div></div>
+        <div class="card"><div class="scroll"><table id="tcont"><thead><tr><th>Insumo</th><th>Estoque anterior</th><th>Compras</th><th>Transferências</th><th>Consumo pela ficha</th><th>Esperado</th><th>Contado</th><th>Diferença</th><th>Situação</th></tr></thead><tbody></tbody></table></div></div>
         <div class="res">
           <div class="card"><div class="k-l">Valor da diferença (insumos faltando)</div><div class="k-v red" id="c-perda">-</div><div class="k-s">diferença negativa × preço do insumo</div></div>
           <div class="card"><div class="k-l">Itens fora do padrão</div><div class="k-v" id="c-fora">-</div><div class="k-s" id="c-fora-s"></div></div>
@@ -197,29 +234,61 @@
         </div>
       </section>
 
+      <!-- REGISTRAR COMPRA -->
+      <section id="compra" class="hide">
+        <h1>Registrar compra</h1>
+        <p class="lead">Lance a compra de um insumo, com o vencimento do boleto. Ela entra no estoque esperado e no Caixa do mês. Depois, refaça a contagem em <b>Contar estoque</b> para conferir.</p>
+        <div class="card"><form class="form" id="f-compra">
+          <label>Loja<select id="cp-loja"><option>Buritis</option><option>Planalto</option><option>Venda Nova</option></select></label>
+          <label>Insumo<select id="cp-ins"></select></label>
+          <label>Quantidade<input type="number" id="cp-qtd" min="0.1" step="0.1" value="50"></label>
+          <label>Valor da nota (R$)<input type="number" id="cp-val" min="0" step="0.01"></label>
+          <label>Parcelas<select id="cp-par"><option>1</option><option>2</option><option>3</option></select></label>
+          <label>Primeiro vencimento (dia do mês)<input type="number" id="cp-dia" min="1" max="30" value="12"></label>
+          <div><button class="btn" type="submit">Lançar compra</button></div>
+        </form><div id="cp-msg"></div></div>
+        <div class="card" style="margin-top:12px"><div class="h2">Compras lançadas nesta sessão</div><div class="scroll"><table id="tcp"><thead><tr><th>Loja</th><th>Insumo</th><th>Quantidade</th><th>Valor</th><th>Parcelas</th><th>Vencimentos</th></tr></thead><tbody></tbody></table></div><div class="note">Ficam só neste navegador. Recarregue a página para limpar.</div></div>
+      </section>
+
+      <!-- TRANSFERIR -->
+      <section id="transf" class="hide">
+        <h1>Transferir produtos</h1>
+        <p class="lead">Mova insumo de uma loja para outra. A loja de origem perde, a de destino ganha, e as duas contagens esperadas se ajustam.</p>
+        <div class="card"><form class="form" id="f-transf">
+          <label>Loja de origem<select id="tr-o"><option>Buritis</option><option>Planalto</option><option>Venda Nova</option></select></label>
+          <label>Loja de destino<select id="tr-d"><option>Planalto</option><option>Buritis</option><option>Venda Nova</option></select></label>
+          <label>Insumo<select id="tr-ins"></select></label>
+          <label>Quantidade<input type="number" id="tr-qtd" min="0.1" step="0.1" value="10"></label>
+          <div><button class="btn" type="submit">Transferir</button></div>
+        </form><div id="tr-msg"></div></div>
+        <div class="card" style="margin-top:12px"><div class="h2">Transferências feitas nesta sessão</div><div class="scroll"><table id="ttr"><thead><tr><th>Origem</th><th>Destino</th><th>Insumo</th><th>Quantidade</th></tr></thead><tbody></tbody></table></div></div>
+      </section>
+
       <!-- PORÇÃO -->
       <section id="porcao" class="hide">
         <h1>Porção de mussarela por pizza</h1>
         <p class="lead">A mussarela é o insumo mais pesado no custo. Mexa na porção e veja o efeito no mês.</p>
-        <div class="card">
-          <div class="bar" style="margin-top:0">
-            <label for="gr" style="font-weight:600">Gramas de mussarela por pizza: <span id="gr-v">130</span> g</label>
-          </div>
-          <input type="range" id="gr" min="100" max="170" step="1" value="130" aria-label="Gramas por pizza">
-          <div class="note">Padrão da ficha técnica nesta demo: 130 g. Valores fictícios.</div>
-        </div>
+        <div class="card"><label for="gr" style="font-weight:600">Gramas de mussarela por pizza: <span id="gr-v">130</span> g</label><input type="range" id="gr" min="100" max="170" step="1" value="130" aria-label="Gramas por pizza"><div class="note">Padrão da ficha técnica nesta demo: 130 g. Valores fictícios.</div></div>
         <div class="res">
           <div class="card"><div class="k-l">Mussarela consumida no mês</div><div class="k-v" id="p-kg">-</div><div class="k-s" id="p-kg-s"></div></div>
           <div class="card"><div class="k-l">Custo da mussarela no mês</div><div class="k-v" id="p-custo">-</div><div class="k-s">preço fictício: R$ 38,00 por kg</div></div>
           <div class="card"><div class="k-l">Diferença contra o padrão</div><div class="k-v" id="p-dif">-</div><div class="k-s" id="p-dif-s"></div></div>
         </div>
-        <div class="card" style="margin-top:12px">
-          <div class="h2">A mesma conta, loja a loja</div>
-          <div class="scroll"><table id="tporc">
-            <thead><tr><th>Loja</th><th>Pizzas no mês</th><th>Mussarela (kg)</th><th>Custo</th><th>Diferença contra 130 g</th></tr></thead>
-            <tbody></tbody>
-          </table></div>
+        <div class="card" style="margin-top:12px"><div class="h2">A mesma conta, loja a loja</div><div class="scroll"><table id="tporc"><thead><tr><th>Loja</th><th>Pizzas no mês</th><th>Mussarela (kg)</th><th>Custo</th><th>Diferença contra 130 g</th></tr></thead><tbody></tbody></table></div></div>
+      </section>
+
+      <!-- FICHAS -->
+      <section id="fichas" class="hide">
+        <h1>Fichas e insumos</h1>
+        <p class="lead">A ficha técnica de cada sabor define quanto de cada insumo vai na pizza. Mude uma porção e veja o custo da pizza na hora.</p>
+        <div class="bar"><select id="fi-sabor" aria-label="Sabor"></select></div>
+        <div class="card"><div class="scroll"><table id="tfi"><thead><tr><th>Insumo</th><th>Gramas por pizza</th><th>Preço por kg</th><th>Custo na pizza</th></tr></thead><tbody></tbody></table></div></div>
+        <div class="res">
+          <div class="card"><div class="k-l">Custo de insumos da pizza</div><div class="k-v" id="fi-custo">-</div><div class="k-s">soma das porções × preço</div></div>
+          <div class="card"><div class="k-l">Preço médio de venda (fictício)</div><div class="k-v" id="fi-preco">-</div><div class="k-s">faturamento por pizza da rede</div></div>
+          <div class="card"><div class="k-l">Custo sobre o preço</div><div class="k-v" id="fi-pct">-</div><div class="k-s">quanto do preço vira insumo</div></div>
         </div>
+        <div class="note">Simulação: as mudanças desta tela não alteram as outras telas.</div>
       </section>
 
       <div class="foot"><span>Pizza Para Você · demonstração com dados fictícios</span><span>Portfólio de Gabriel Kochhann Silva</span></div>
@@ -228,75 +297,111 @@
 </div>
 
 <script>
-/* ---------- Dados fictícios (gerados com semente fixa, sempre iguais) ---------- */
+/* ---------- Dados fictícios (semente fixa, sempre iguais) ---------- */
 function rng(seed){ let s=seed>>>0; return function(){ s=(s*1664525+1013904223)>>>0; return s/4294967296; }; }
 const LOJAS = [
   { nome:'Buritis',    base:3300, fpp:33.4, seed:11 },
   { nome:'Planalto',   base:4500, fpp:32.1, seed:23 },
   { nome:'Venda Nova', base:2300, fpp:34.8, seed:37 }
 ];
+const NOMES_LOJA = LOJAS.map(l=>l.nome);
 const FORMAS = [['Dinheiro',.12],['Crédito',.31],['Débito',.19],['Pix',.2],['App de delivery',.18]];
-const MULT_SEMANA = [1.05, .78, .8, .85, .95, 1.35, 1.5]; /* seg a dom */
-const DIAS = 30; /* set/26: 1º = terça */
-const dados = {}; /* dados[loja][dia] = {fat, piz} */
+const MULT_SEMANA = [1.05, .78, .8, .85, .95, 1.35, 1.5]; /* índice = dia % 7: 0 seg ... 6 dom; dia 1 = terça */
+const DIA_NOME = ['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'];
+const DIAS = 30;
+const dados = {};
 LOJAS.forEach(l=>{
   const r = rng(l.seed); dados[l.nome]=[];
   for(let d=1; d<=DIAS; d++){
-    const mult = MULT_SEMANA[d % 7]; /* dia 1 = terça: índice 1 */
-    const fat = Math.round(l.base * mult * (0.88 + r()*0.24) * 100)/100;
+    const fat = Math.round(l.base * MULT_SEMANA[d % 7] * (0.88 + r()*0.24) * 100)/100;
     dados[l.nome].push({ dia:d, fat:fat, piz:Math.round(fat/l.fpp) });
   }
 });
 const SABORES = [['Calabresa',.31],['Frango catupiry',.18],['Portuguesa',.07],['Quatro queijos',.05],['Bacon cheddar',.05],['Outros',.34]];
 
-/* Insumos: preço fictício, consumo da ficha por pizza (em unidade do insumo) */
+/* iniF e compF: estoque anterior e compras do mês, como fração do consumo pela ficha (fictício). lead = prazo de entrega em dias */
 const INSUMOS = [
-  { n:'Mussarela',        un:'kg', preco:38.00, porPizza:0.130, iniF:.12, compF:1.03 },
-  { n:'Calabresa',        un:'kg', preco:29.50, porPizza:0.045, iniF:.15, compF:1.05 },
-  { n:'Frango desfiado',  un:'kg', preco:24.00, porPizza:0.050, iniF:.14, compF:1.04 },
-  { n:'Molho de tomate',  un:'kg', preco:9.80,  porPizza:0.060, iniF:.15, compF:1.05 },
-  { n:'Bacon',            un:'kg', preco:34.00, porPizza:0.030, iniF:.18, compF:1.06 },
-  { n:'Catupiry',         un:'kg', preco:31.00, porPizza:0.035, iniF:.16, compF:1.05 },
-  { n:'Farinha de trigo', un:'kg', preco:4.90,  porPizza:0.140, iniF:.20, compF:1.08 },
-  { n:'Refrigerante 2 L', un:'un', preco:9.20,  porPizza:0.220, iniF:.15, compF:1.05 }
+  { n:'Mussarela',        un:'kg', preco:38.00, porPizza:0.130, iniF:.12, compF:1.03, lead:2 },
+  { n:'Calabresa',        un:'kg', preco:29.50, porPizza:0.045, iniF:.15, compF:1.05, lead:2 },
+  { n:'Frango desfiado',  un:'kg', preco:24.00, porPizza:0.050, iniF:.14, compF:1.04, lead:1 },
+  { n:'Molho de tomate',  un:'kg', preco:9.80,  porPizza:0.060, iniF:.15, compF:1.05, lead:3 },
+  { n:'Bacon',            un:'kg', preco:34.00, porPizza:0.030, iniF:.18, compF:1.06, lead:3 },
+  { n:'Catupiry',         un:'kg', preco:31.00, porPizza:0.035, iniF:.16, compF:1.05, lead:3 },
+  { n:'Farinha de trigo', un:'kg', preco:4.90,  porPizza:0.140, iniF:.20, compF:1.08, lead:4 },
+  { n:'Refrigerante 2 L', un:'un', preco:9.20,  porPizza:0.220, iniF:.15, compF:1.05, lead:2 }
 ];
-/* iniF e compF: estoque anterior e compras do mês, como fração do consumo pela ficha (valores fictícios) */
-/* Valores contados de exemplo: pequenas diferenças criadas à mão para a demonstração */
 const DESVIO_EXEMPLO = { 'Buritis':[-0.07,-0.02,0.01,0.03,-0.06,0.00,0.02,-0.01],
                          'Planalto':[-0.03,0.01,-0.01,0.02,0.00,-0.02,0.01,0.02],
                          'Venda Nova':[-0.09,-0.06,0.03,0.00,-0.02,-0.07,0.04,0.01] };
+/* Fichas por sabor: gramas por pizza de cada insumo (índice do insumo -> gramas) */
+const FICHAS = {
+  'Calabresa':       {0:130,1:45,3:60,6:140},
+  'Frango catupiry': {0:130,2:50,5:35,3:60,6:140},
+  'Portuguesa':      {0:130,1:20,3:60,6:140},
+  'Quatro queijos':  {0:130,5:35,3:60,6:140},
+  'Bacon cheddar':   {0:130,4:30,3:60,6:140}
+};
+const DESPESAS = [ {dia:5, nome:'Folha de pagamento', v:52000}, {dia:10, nome:'Aluguel e condomínio', v:18000}, {dia:20, nome:'Energia, água e gás', v:9500},
+                   {dia:20, nome:'Impostos', v:21000}, {dia:25, nome:'Marketing', v:7000} ]; /* valores da rede, fictícios */
+const SEMANAS = [[1,7],[8,14],[15,21],[22,28],[29,30]];
 
 /* ---------- Utilidades ---------- */
 const $ = s=>document.querySelector(s);
 const brl = v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
 const num = (v,d=0)=>v.toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d});
 const FAIXA = { mes:[1,30], s1:[1,7], s2:[8,14], s3:[15,21], s4:[22,28] };
+const nomesDe = loja => loja==='all' ? NOMES_LOJA : [loja];
 let est = { loja:'all', per:'mes', met:'fat', diaSel:null };
 
-function dadosDe(loja, per){
-  const [a,b] = FAIXA[per];
-  const nomes = loja==='all' ? LOJAS.map(l=>l.nome) : [loja];
+function dadosDe(loja, per, faixa){
+  const [a,b] = faixa || FAIXA[per];
   const dias=[];
   for(let d=a; d<=b; d++){
-    let fat=0,piz=0; nomes.forEach(n=>{ const x=dados[n][d-1]; fat+=x.fat; piz+=x.piz; });
+    let fat=0,piz=0; nomesDe(loja).forEach(n=>{ const x=dados[n][d-1]; fat+=x.fat; piz+=x.piz; });
     dias.push({dia:d,fat,piz});
   }
   return dias;
 }
+const soma = (arr,k)=>arr.reduce((s,x)=>s+x[k],0);
+const pizzasMes = loja => soma(dadosDe(loja,'mes'),'piz');
+const fatMes = loja => soma(dadosDe(loja,'mes'),'fat');
+function popular(sel, itens){ $(sel).innerHTML = itens.map((t,i)=>'<option value="'+i+'">'+t+'</option>').join(''); }
+
+/* ---------- Estado de estoque: contagens, compras e transferências lançadas ---------- */
+const extra = {}; LOJAS.forEach(l=>{ extra[l.nome]=INSUMOS.map(()=>({compra:0,transfIn:0,transfOut:0})); });
+const comprasLog = [], transfLog = [];
+const contados = {};
+function linhaInsumo(loja,i){
+  const ins = INSUMOS[i], ex = extra[loja][i];
+  const cons = Math.round(pizzasMes(loja)*ins.porPizza*10)/10;
+  const ini = Math.round(cons*ins.iniF*10)/10;
+  const comp = Math.round((cons*ins.compF + ex.compra)*10)/10;
+  const transf = Math.round((ex.transfIn - ex.transfOut)*10)/10;
+  const esp = Math.round((ini+comp+transf-cons)*10)/10;
+  return { ini, comp, transf, cons, esp };
+}
+function iniciarContados(loja){
+  /* contagem de exemplo: parte do esperado SEM os lançamentos da sessão, com pequenas diferenças criadas à mão */
+  contados[loja] = INSUMOS.map((ins,i)=>{
+    const cons = Math.round(pizzasMes(loja)*ins.porPizza*10)/10;
+    const esp0 = Math.round((cons*ins.iniF + cons*ins.compF - cons)*10)/10;
+    return Math.round(esp0*(1+DESVIO_EXEMPLO[loja][i])*10)/10;
+  });
+}
+NOMES_LOJA.forEach(iniciarContados);
+function situacao(esp,cont){ const p=(cont-esp)/esp; return Math.abs(p)>0.05 ? (p<0?'bad':'warn') : 'ok'; }
+const rotulo = s => s==='ok'?'dentro do padrão':(s==='bad'?'faltando':'sobrando');
 
 /* ---------- Visão geral ---------- */
 function desenharVisao(){
   const dias = dadosDe(est.loja, est.per);
-  const fat = dias.reduce((s,x)=>s+x.fat,0), piz = dias.reduce((s,x)=>s+x.piz,0);
+  const fat = soma(dias,'fat'), piz = soma(dias,'piz');
   $('#k-fat').textContent = brl(fat);
   $('#k-fat-s').textContent = dias.length+' dias · média '+brl(fat/dias.length)+' por dia';
   $('#k-piz').textContent = num(piz);
   $('#k-tk').textContent = brl(fat/piz);
-
-  /* gráfico */
   const W=640,H=230,pl=68,pr=10,pt=12,pb=26;
-  const vals = dias.map(x=>x[est.met]);
-  const max = Math.max(...vals)*1.12;
+  const vals = dias.map(x=>x[est.met]), max = Math.max(...vals)*1.12;
   const x = i=> pl + (W-pl-pr) * (dias.length===1?0.5:i/(dias.length-1));
   const y = v=> pt + (H-pt-pb) * (1 - v/max);
   let g='';
@@ -311,18 +416,14 @@ function desenharVisao(){
     g+='<rect x="'+(x(i)-12)+'" y="0" width="24" height="'+H+'" fill="transparent" style="cursor:pointer" data-dia="'+d.dia+'"><title>Dia '+d.dia+': '+(est.met==='fat'?brl(d.fat):num(d.piz)+' pizzas')+'</title></rect>';
   });
   $('#chart').innerHTML = g;
-  $('#chart').querySelectorAll('rect[data-dia]').forEach(r=>r.addEventListener('click',()=>{ est.diaSel=+r.dataset.dia; desenharVisao(); desenharDetalhe(); }));
+  $('#chart').querySelectorAll('rect[data-dia]').forEach(r=>r.addEventListener('click',()=>{ est.diaSel=+r.dataset.dia; desenharVisao(); }));
   desenharDetalhe();
-
-  /* lojas */
-  const tot = LOJAS.reduce((s,l)=>s+dadosDe(l.nome,est.per).reduce((a,b)=>a+b.fat,0),0);
+  const tot = LOJAS.reduce((s,l)=>s+soma(dadosDe(l.nome,est.per),'fat'),0);
   $('#lojas tbody').innerHTML = LOJAS.map(l=>{
-    const dd=dadosDe(l.nome,est.per), f=dd.reduce((a,b)=>a+b.fat,0), p=dd.reduce((a,b)=>a+b.piz,0);
+    const dd=dadosDe(l.nome,est.per), f=soma(dd,'fat'), p=soma(dd,'piz');
     return '<tr class="click" data-l="'+l.nome+'"><td><b>'+l.nome+'</b></td><td>'+brl(f)+'</td><td>'+num(p)+'</td><td>'+brl(f/p)+'</td><td>'+num(f/tot*100,1)+'%</td></tr>';
   }).join('');
   $('#lojas tbody').querySelectorAll('tr').forEach(tr=>tr.addEventListener('click',()=>{ est.loja=tr.dataset.l; $('#loja').value=est.loja; est.diaSel=null; desenharVisao(); window.scrollTo({top:0,behavior:'smooth'}); }));
-
-  /* sabores */
   $('#sabores').innerHTML = SABORES.map(s=>'<div class="row"><span>'+s[0]+'</span><div class="track"><div class="fill" style="width:'+(s[1]*100/0.34)+'%;'+(s[0]==='Outros'?'background:#BFC4D3':'')+'"></div></div><span style="text-align:right">'+num(piz*s[1])+' · '+num(s[1]*100,0)+'%</span></div>').join('');
   atualizarAcao();
 }
@@ -330,77 +431,187 @@ function desenharDetalhe(){
   const box = $('#detalhe');
   if(est.diaSel==null){ box.classList.add('hide'); return; }
   const d = dadosDe(est.loja,'mes')[est.diaSel-1];
-  const nomes = est.loja==='all' ? LOJAS.map(l=>l.nome) : [est.loja];
-  const r = rng(est.diaSel*7+nomes.length);
+  const r = rng(est.diaSel*7+nomesDe(est.loja).length);
   let sobra=d.fat, linhas='';
   FORMAS.forEach((f,i)=>{
     const v = i===FORMAS.length-1 ? sobra : Math.round(d.fat*f[1]*(0.92+r()*0.16)*100)/100;
-    sobra -= v;
-    linhas += '<tr><td>'+f[0]+'</td><td>'+brl(v)+'</td><td>'+num(v/d.fat*100,1)+'%</td></tr>';
+    sobra -= v; linhas += '<tr><td>'+f[0]+'</td><td>'+brl(v)+'</td><td>'+num(v/d.fat*100,1)+'%</td></tr>';
   });
   box.classList.remove('hide');
-  box.innerHTML = '<div class="h2">'+String(d.dia).padStart(2,'0')+'/09/2026 · '+(est.loja==='all'?'Todas as lojas':est.loja)+'</div>'
+  box.innerHTML = '<div class="h2">Detalhe do dia · '+String(d.dia).padStart(2,'0')+'/09/2026 · '+(est.loja==='all'?'Todas as lojas':est.loja)+'</div>'
     +'<div class="note" style="margin:0 0 6px">Faturamento '+brl(d.fat)+' · '+num(d.piz)+' pizzas · a soma das formas bate com o faturamento do dia</div>'
     +'<table><thead><tr><th>Forma de pagamento</th><th>Valor</th><th>Parte do dia</th></tr></thead><tbody>'+linhas+'</tbody></table>';
 }
 
+/* ---------- Caixa do mês ---------- */
+function desenharCaixa(){
+  const loja = $('#loja-cx').value, parte = fatMes(loja)/fatMes('all');
+  let acum=0, linhas='', entTot=0, saldoTot=0;
+  window._cxSem = [];
+  SEMANAS.forEach((faixa,k)=>{
+    const ent = soma(dadosDe(loja,'mes',faixa),'fat');
+    /* boletos: compras do mês (valor fictício) distribuídas 30/25/25/15/5 pelas semanas de vencimento */
+    const comprasValor = nomesDe(loja).reduce((s,n)=>s+INSUMOS.reduce((a,ins,i)=>a+linhaInsumo(n,i).comp*ins.preco,0),0);
+    const bol = comprasValor*[.30,.25,.25,.15,.05][k];
+    const desp = DESPESAS.filter(d=>d.dia>=faixa[0]&&d.dia<=faixa[1]).reduce((s,d)=>s+d.v*parte,0);
+    const saldo = ent-bol-desp; acum+=saldo; entTot+=ent; saldoTot+=saldo;
+    window._cxSem.push({faixa,ent,bol,desp});
+    linhas += '<tr class="click" data-k="'+k+'"><td><b>'+(k+1)+'ª semana</b> <span class="note">('+faixa[0]+' a '+faixa[1]+')</span></td><td>'+brl(ent)+'</td><td>'+brl(bol)+'</td><td>'+brl(desp)+'</td><td><span style="color:'+(saldo<0?'#C12628':'#1F7A4D')+';font-weight:600">'+brl(saldo)+'</span></td><td>'+brl(acum)+'</td></tr>';
+  });
+  $('#tcx tbody').innerHTML = linhas;
+  $('#tcx tbody').querySelectorAll('tr').forEach(tr=>tr.addEventListener('click',()=>mostrarSemana(+tr.dataset.k,parte)));
+  $('#cx-ent').textContent = brl(entTot); $('#cx-saldo').textContent = brl(saldoTot); $('#cx-saldo').classList.toggle('red',saldoTot<0);
+  $('#cx-cmv').textContent = brl(nomesDe(loja).reduce((s,n)=>s+INSUMOS.reduce((a,ins,i)=>a+linhaInsumo(n,i).cons*ins.preco,0),0));
+  $('#cx-det').classList.add('hide');
+}
+function mostrarSemana(k,parte){
+  const s = window._cxSem[k], box=$('#cx-det');
+  const itens = DESPESAS.filter(d=>d.dia>=s.faixa[0]&&d.dia<=s.faixa[1]).map(d=>'<tr><td>Dia '+d.dia+' · '+d.nome+'</td><td>'+brl(d.v*parte)+'</td></tr>');
+  itens.unshift('<tr><td>Boletos de fornecedores (compras do mês)</td><td>'+brl(s.bol)+'</td></tr>');
+  box.classList.remove('hide');
+  box.innerHTML='<div class="h2">O que vence na '+(k+1)+'ª semana (dias '+s.faixa[0]+' a '+s.faixa[1]+')</div><table><thead><tr><th>Vencimento</th><th>Valor</th></tr></thead><tbody>'+itens.join('')+'</tbody></table>';
+}
+
+/* ---------- Pizzas por dia ---------- */
+function desenharPizzas(){
+  const loja = $('#loja-pz').value, dd = dadosDe(loja,'mes');
+  const W=720,H=220,pl=44,pr=8,pt=10,pb=26, max=Math.max(...dd.map(x=>x.piz))*1.1, bw=(W-pl-pr)/dd.length;
+  let g='';
+  for(let t=0;t<=4;t++){ const v=max*t/4, yy=pt+(H-pt-pb)*(1-v/max); g+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+yy+'" y2="'+yy+'" stroke="#EEF0F5"/><text x="'+(pl-6)+'" y="'+(yy+4)+'" text-anchor="end">'+num(v,0)+'</text>'; }
+  dd.forEach((d,i)=>{
+    const h=(H-pt-pb)*d.piz/max, fim = (d.dia%7===5||d.dia%7===6);
+    g+='<rect x="'+(pl+i*bw+2)+'" y="'+(H-pb-h)+'" width="'+(bw-4)+'" height="'+h+'" rx="3" fill="'+(fim?'#C12628':'#4054B2')+'"><title>Dia '+d.dia+': '+num(d.piz)+' pizzas</title></rect>';
+    if(d.dia%5===1) g+='<text x="'+(pl+i*bw+bw/2)+'" y="'+(H-8)+'" text-anchor="middle">'+String(d.dia).padStart(2,'0')+'</text>';
+  });
+  g+='<text x="'+W+'" y="9" text-anchor="end">vermelho = sábado e domingo</text>';
+  $('#pz-chart').innerHTML=g;
+  const media = soma(dd,'piz')/dd.length;
+  const porDia = DIA_NOME.map((n,idx)=>{ const xs=dd.filter(x=>x.dia%7===idx); return { n, m:soma(xs,'piz')/xs.length, max:Math.max(...xs.map(x=>x.piz)) }; });
+  $('#tpz tbody').innerHTML = porDia.map(p=>'<tr><td><b>'+p.n+'</b></td><td>'+num(p.m,0)+'</td><td>'+num(p.max)+'</td><td>'+(p.m>=media?'+':'')+num((p.m/media-1)*100,0)+'%</td></tr>').join('');
+}
+
+/* ---------- Estoque e CMV ---------- */
+let abaEs='posicao';
+function linhasEstoque(loja){
+  const pz = pizzasMes(loja);
+  return INSUMOS.map((ins,i)=>{
+    const L=linhaInsumo(loja,i), c=contados[loja][i];
+    return { ins, i, L, c, valor:c*ins.preco, consVal:L.cons*ins.preco,
+             realQtd:L.ini+L.comp+L.transf-c, realVal:(L.ini+L.comp+L.transf-c)*ins.preco,
+             desvioVal:(c-L.esp)*ins.preco, consDia:L.cons/30, cob:c/(L.cons/30) };
+  });
+}
+function desenharEstoque(){
+  const loja=$('#loja-es').value, R=linhasEstoque(loja), pz=pizzasMes(loja), corpo=$('#es-corpo');
+  if(abaEs==='posicao'){
+    const tot=R.reduce((s,r)=>s+r.valor,0);
+    corpo.innerHTML='<div class="grid kpis" style="margin-bottom:12px"><div class="card"><div class="k-l">Valor em estoque</div><div class="k-v">'+brl(tot)+'</div><div class="k-s">última contagem × preço</div></div><div class="card"><div class="k-l">Insumos contados</div><div class="k-v">'+R.length+'</div><div class="k-s">100% da ficha</div></div><div class="card"><div class="k-l">Itens fora do padrão</div><div class="k-v">'+R.filter(r=>situacao(r.L.esp,r.c)!=="ok").length+'</div><div class="k-s">diferença maior que 5%</div></div><div class="card"><div class="k-l">Itens críticos</div><div class="k-v">'+R.filter(r=>r.cob<4).length+'</div><div class="k-s">menos de 4 dias de cobertura</div></div></div>'
+      +'<div class="card"><div class="scroll"><table><thead><tr><th>Insumo</th><th>Contado</th><th>Preço</th><th>Valor em estoque</th><th>Situação</th></tr></thead><tbody>'
+      +R.map(r=>{const s=situacao(r.L.esp,r.c);return '<tr><td><b>'+r.ins.n+'</b></td><td>'+num(r.c,1)+' '+r.ins.un+'</td><td>'+brl(r.ins.preco)+'</td><td>'+brl(r.valor)+'</td><td><span class="tag '+s+'">'+rotulo(s)+'</span></td></tr>';}).join('')
+      +'<tr class="tot"><td>Total</td><td></td><td></td><td>'+brl(tot)+'</td><td></td></tr></tbody></table></div></div>';
+  } else if(abaEs==='cmv'){
+    const teo=R.reduce((s,r)=>s+r.consVal,0), real=R.reduce((s,r)=>s+r.realVal,0), fat=fatMes(loja);
+    corpo.innerHTML='<div class="res" style="margin-top:0"><div class="card"><div class="k-l">CMV teórico (pela ficha)</div><div class="k-v">'+brl(teo)+'</div><div class="k-s">'+brl(teo/pz)+' por pizza</div></div><div class="card"><div class="k-l">CMV real (pela contagem)</div><div class="k-v">'+brl(real)+'</div><div class="k-s">'+brl(real/pz)+' por pizza · '+num(real/fat*100,1)+'% do faturamento</div></div><div class="card"><div class="k-l">Diferença (real − teórico)</div><div class="k-v '+(real>teo?'red':'ok')+'">'+(real>teo?'+':'')+brl(real-teo)+'</div><div class="k-s">'+(real>teo?'saiu mais do que a ficha prevê':'saiu menos do que a ficha prevê')+'</div></div></div>'
+      +'<div class="card" style="margin-top:12px"><div class="scroll"><table><thead><tr><th>Insumo</th><th>Teórico</th><th>Real</th><th>Diferença</th></tr></thead><tbody>'
+      +R.map(r=>'<tr><td><b>'+r.ins.n+'</b></td><td>'+brl(r.consVal)+'</td><td>'+brl(r.realVal)+'</td><td>'+(r.realVal>r.consVal?'+':'')+brl(r.realVal-r.consVal)+'</td></tr>').join('')+'</tbody></table></div><div class="note">CMV = Custo da Mercadoria Vendida. Real = estoque anterior + entradas − contagem final.</div></div>';
+  } else if(abaEs==='desvio'){
+    const ord=[...R].sort((a,b)=>a.desvioVal-b.desvioVal), m=Math.max(...ord.map(r=>Math.abs(r.desvioVal)),1);
+    corpo.innerHTML='<div class="card bars"><div class="h2">Onde o estoque escapou (contado × esperado, em R$)</div>'
+      +ord.map(r=>'<div class="row"><span>'+r.ins.n+'</span><div class="track"><div class="fill '+(r.desvioVal<0?'neg':'pos')+'" style="width:'+(Math.abs(r.desvioVal)/m*100)+'%"></div></div><span style="text-align:right">'+(r.desvioVal>0?'+':'')+brl(r.desvioVal)+'</span></div>').join('')
+      +'<div class="note">Vermelho = faltando. Dourado = sobrando. Mexa em Contar estoque para ver mudar.</div></div>';
+  } else if(abaEs==='cobertura'){
+    corpo.innerHTML='<div class="card"><div class="scroll"><table><thead><tr><th>Insumo</th><th>Em estoque</th><th>Consumo por dia</th><th>Cobertura</th><th>Situação</th></tr></thead><tbody>'
+      +R.map(r=>{const s=r.cob<4?'bad':(r.cob<8?'warn':'ok');return '<tr><td><b>'+r.ins.n+'</b></td><td>'+num(r.c,1)+' '+r.ins.un+'</td><td>'+num(r.consDia,1)+' '+r.ins.un+'</td><td>'+num(r.cob,1)+' dias</td><td><span class="tag '+s+'">'+(s==='bad'?'crítico':(s==='warn'?'atenção':'saudável'))+'</span></td></tr>';}).join('')+'</tbody></table></div><div class="note">Crítico: menos de 4 dias. Atenção: menos de 8 dias.</div></div>';
+  } else {
+    const ord=[...R].sort((a,b)=>b.consVal-a.consVal), tot=ord.reduce((s,r)=>s+r.consVal,0); let ac=0;
+    corpo.innerHTML='<div class="card"><div class="scroll"><table><thead><tr><th>Insumo</th><th>Consumo no mês</th><th>Parte do total</th><th>Acumulado</th><th>Classe</th></tr></thead><tbody>'
+      +ord.map(r=>{ac+=r.consVal;const p=ac/tot*100,c=p-r.consVal/tot*100<80?'A':(p-r.consVal/tot*100<95?'B':'C');return '<tr><td><b>'+r.ins.n+'</b></td><td>'+brl(r.consVal)+'</td><td>'+num(r.consVal/tot*100,1)+'%</td><td>'+num(p,1)+'%</td><td><span class="tag '+(c==='A'?'bad':(c==='B'?'warn':'ok'))+'">'+c+'</span></td></tr>';}).join('')+'</tbody></table></div><div class="note">A = até 80% do valor consumido, B = até 95%, C = o resto. Comece a cuidar pela classe A.</div></div>';
+  }
+}
+
+/* ---------- Planejar compras ---------- */
+function desenharPlanejar(){
+  const loja=$('#loja-pl').value, alvo=+$('#alvo').value; $('#alvo-v').textContent=alvo;
+  const R=linhasEstoque(loja); let total=0;
+  const linhas=R.map(r=>{
+    const sug=Math.max(0, Math.ceil((alvo*r.consDia - r.c)*10)/10), val=sug*r.ins.preco; total+=val;
+    const pedir = r.cob <= r.ins.lead+1;
+    const s = pedir?'bad':(sug>0?'warn':'ok');
+    return '<tr><td><b>'+r.ins.n+'</b></td><td>'+num(r.consDia,1)+' '+r.ins.un+'</td><td>'+num(r.c,1)+' '+r.ins.un+'</td><td>'+num(r.cob,1)+'</td><td>'+r.ins.lead+' dias</td><td>'+(sug>0?num(sug,1)+' '+r.ins.un:'—')+'</td><td>'+(sug>0?brl(val):'—')+'</td><td><span class="tag '+s+'">'+(pedir?'pedir hoje':(sug>0?'pedir esta semana':'sem pedido'))+'</span></td></tr>';
+  }).join('');
+  $('#tpl tbody').innerHTML = linhas + '<tr class="tot"><td>Total sugerido</td><td></td><td></td><td></td><td></td><td></td><td>'+brl(total)+'</td><td></td></tr>';
+}
+
 /* ---------- Contagem ---------- */
-const contados = {}; /* contados[loja][i] */
-function pizzasMes(loja){ return dadosDe(loja,'mes').reduce((s,x)=>s+x.piz,0); }
-function linhaInsumo(loja,i){
-  const ins = INSUMOS[i];
-  const cons = Math.round(pizzasMes(loja)*ins.porPizza*10)/10;
-  const ini = Math.round(cons*ins.iniF*10)/10, comp = Math.round(cons*ins.compF*10)/10;
-  const esp = Math.round((ini+comp-cons)*10)/10;
-  return { ini, comp, cons, esp };
-}
-function iniciarContados(loja){
-  contados[loja] = INSUMOS.map((_,i)=>{ const L=linhaInsumo(loja,i); return Math.round(L.esp*(1+DESVIO_EXEMPLO[loja][i])*10)/10; });
-}
-LOJAS.forEach(l=>iniciarContados(l.nome));
-function situacao(esp,cont){ const p=(cont-esp)/esp; return Math.abs(p)>0.05 ? (p<0?'bad':'warn') : 'ok'; }
 function desenharContagem(){
   const loja = $('#loja2').value;
   $('#tcont tbody').innerHTML = INSUMOS.map((ins,i)=>{
     const L=linhaInsumo(loja,i), c=contados[loja][i], dif=c-L.esp, p=dif/L.esp, s=situacao(L.esp,c);
-    return '<tr><td><b>'+ins.n+'</b> <span class="note">('+ins.un+')</span></td><td>'+num(L.ini,1)+'</td><td>'+num(L.comp,1)+'</td><td>'+num(L.cons,1)+'</td><td>'+num(L.esp,1)+'</td>'
+    return '<tr><td><b>'+ins.n+'</b> <span class="note">('+ins.un+')</span></td><td>'+num(L.ini,1)+'</td><td>'+num(L.comp,1)+'</td><td>'+(L.transf>0?'+':'')+num(L.transf,1)+'</td><td>'+num(L.cons,1)+'</td><td>'+num(L.esp,1)+'</td>'
       +'<td><input type="number" step="0.1" min="0" data-i="'+i+'" value="'+c+'" class="'+(s==='ok'?'':(s==='bad'?'bad':'warn'))+'" aria-label="Contado '+ins.n+'"></td>'
       +'<td>'+(dif>0?'+':'')+num(dif,1)+' ('+(p>0?'+':'')+num(p*100,1)+'%)</td>'
-      +'<td><span class="tag '+(s==='ok'?'ok':(s==='bad'?'bad':'warn'))+'">'+(s==='ok'?'dentro do padrão':(s==='bad'?'faltando':'sobrando'))+'</span></td></tr>';
+      +'<td><span class="tag '+s+'">'+rotulo(s)+'</span></td></tr>';
   }).join('');
   $('#tcont tbody').querySelectorAll('input').forEach(inp=>inp.addEventListener('input',()=>{
     const v=parseFloat(inp.value.replace(',','.')); if(isNaN(v)||v<0) return;
-    contados[loja][+inp.dataset.i]=v; atualizarResumoContagem(loja); atualizarLinha(inp,loja,+inp.dataset.i);
+    contados[loja][+inp.dataset.i]=v; atualizarLinha(inp,loja,+inp.dataset.i); atualizarResumoContagem(loja);
   }));
   atualizarResumoContagem(loja);
 }
 function atualizarLinha(inp,loja,i){
   const L=linhaInsumo(loja,i), c=contados[loja][i], dif=c-L.esp, p=dif/L.esp, s=situacao(L.esp,c), tr=inp.closest('tr');
   inp.className = s==='ok'?'':(s==='bad'?'bad':'warn');
-  tr.children[6].textContent=(dif>0?'+':'')+num(dif,1)+' ('+(p>0?'+':'')+num(p*100,1)+'%)';
-  tr.children[7].innerHTML='<span class="tag '+(s==='ok'?'ok':(s==='bad'?'bad':'warn'))+'">'+(s==='ok'?'dentro do padrão':(s==='bad'?'faltando':'sobrando'))+'</span>';
-}
-function resumoContagem(loja){
-  let perda=0, fora=0;
-  INSUMOS.forEach((ins,i)=>{ const L=linhaInsumo(loja,i), c=contados[loja][i], dif=c-L.esp; if(dif<0) perda+=-dif*ins.preco; if(situacao(L.esp,c)!=='ok') fora++; });
-  return { perda, fora };
+  tr.children[7].textContent=(dif>0?'+':'')+num(dif,1)+' ('+(p>0?'+':'')+num(p*100,1)+'%)';
+  tr.children[8].innerHTML='<span class="tag '+s+'">'+rotulo(s)+'</span>';
 }
 function atualizarResumoContagem(loja){
-  const r=resumoContagem(loja);
-  $('#c-perda').textContent = brl(r.perda);
-  $('#c-fora').textContent = r.fora+' de '+INSUMOS.length;
-  $('#c-fora-s').textContent = r.fora===0 ? 'tudo dentro do padrão' : 'avisado na hora da contagem';
+  let perda=0, fora=0;
+  INSUMOS.forEach((ins,i)=>{ const L=linhaInsumo(loja,i), c=contados[loja][i], dif=c-L.esp; if(dif<0) perda+=-dif*ins.preco; if(situacao(L.esp,c)!=='ok') fora++; });
+  $('#c-perda').textContent = brl(perda);
+  $('#c-fora').textContent = fora+' de '+INSUMOS.length;
+  $('#c-fora-s').textContent = fora===0 ? 'tudo dentro do padrão' : 'avisado na hora da contagem';
   $('#c-qtd').textContent = INSUMOS.length;
   atualizarAcao();
 }
 function atualizarAcao(){
   let fora=0, itens=[];
-  LOJAS.forEach(l=>INSUMOS.forEach((ins,i)=>{ const L=linhaInsumo(l.nome,i), c=contados[l.nome][i]; if(situacao(L.esp,c)!=='ok'){ fora++; itens.push(l.nome+': '+ins.n+' '+(c<L.esp?'faltando ':'sobrando ')+num(Math.abs(c-L.esp),1)+' '+ins.un); } }));
+  NOMES_LOJA.forEach(n=>INSUMOS.forEach((ins,i)=>{ const L=linhaInsumo(n,i), c=contados[n][i]; if(situacao(L.esp,c)!=='ok'){ fora++; itens.push(n+': '+ins.n+' '+(c<L.esp?'faltando ':'sobrando ')+num(Math.abs(c-L.esp),1)+' '+ins.un); } }));
   $('#k-fora').textContent = fora; $('#k-fora').classList.toggle('red',fora>0);
   $('#acao-n').textContent = fora;
   $('#acao-t').textContent = fora===0 ? 'Tudo em ordem.' : 'Alguns pontos pedem sua atenção.';
   $('#acao-l').innerHTML = fora===0 ? '<li>Nenhum insumo fora do padrão na última contagem.</li>' : itens.slice(0,4).map(t=>'<li>'+t+'</li>').join('') + (itens.length>4?'<li>e mais '+(itens.length-4)+' item(ns)</li>':'');
 }
+
+/* ---------- Registrar compra e transferir ---------- */
+function msg(sel,tipo,t){ $(sel).innerHTML='<div class="msg '+tipo+'" role="status">'+t+'</div>'; }
+function sugerirValor(){ const q=parseFloat($('#cp-qtd').value)||0; $('#cp-val').value=(q*INSUMOS[+$('#cp-ins').value].preco).toFixed(2); }
+function desenharCompras(){
+  $('#tcp tbody').innerHTML = comprasLog.length ? comprasLog.map(c=>'<tr><td>'+c.loja+'</td><td>'+c.ins+'</td><td>'+num(c.qtd,1)+'</td><td>'+brl(c.val)+'</td><td>'+c.par+'x</td><td>'+c.venc+'</td></tr>').join('') : '<tr><td colspan="6" style="text-align:center;color:var(--faint)">Nenhuma compra lançada ainda.</td></tr>';
+}
+function desenharTransf(){
+  $('#ttr tbody').innerHTML = transfLog.length ? transfLog.map(t=>'<tr><td>'+t.o+'</td><td>'+t.d+'</td><td>'+t.ins+'</td><td>'+num(t.qtd,1)+'</td></tr>').join('') : '<tr><td colspan="4" style="text-align:center;color:var(--faint)">Nenhuma transferência feita ainda.</td></tr>';
+}
+$('#f-compra').addEventListener('submit',e=>{
+  e.preventDefault();
+  const loja=$('#cp-loja').value, i=+$('#cp-ins').value, q=parseFloat($('#cp-qtd').value), v=parseFloat($('#cp-val').value), par=+$('#cp-par').value, dia=+$('#cp-dia').value;
+  if(!(q>0)||!(v>=0)||!(dia>=1&&dia<=30)){ msg('#cp-msg','bad','Confira quantidade, valor e dia do vencimento.'); return; }
+  extra[loja][i].compra += q;
+  const venc=[]; for(let k=0;k<par;k++) venc.push(String(Math.min(30,dia+k*7)).padStart(2,'0')+'/09');
+  comprasLog.unshift({loja,ins:INSUMOS[i].n,qtd:q,val:v,par,venc:venc.join(' · ')});
+  msg('#cp-msg','ok','Compra lançada: '+num(q,1)+' '+INSUMOS[i].un+' de '+INSUMOS[i].n+' em '+loja+'. O estoque esperado subiu. Refaça a contagem para conferir.');
+  desenharCompras(); atualizarAcao();
+});
+$('#f-transf').addEventListener('submit',e=>{
+  e.preventDefault();
+  const o=$('#tr-o').value, d=$('#tr-d').value, i=+$('#tr-ins').value, q=parseFloat($('#tr-qtd').value);
+  if(o===d){ msg('#tr-msg','bad','A origem e o destino precisam ser lojas diferentes.'); return; }
+  if(!(q>0)){ msg('#tr-msg','bad','Digite uma quantidade maior que zero.'); return; }
+  if(q>contados[o][i]){ msg('#tr-msg','bad','A loja '+o+' só tem '+num(contados[o][i],1)+' '+INSUMOS[i].un+' contados de '+INSUMOS[i].n+'.'); return; }
+  extra[o][i].transfOut += q; extra[d][i].transfIn += q; contados[o][i] = Math.round((contados[o][i]-q)*10)/10; contados[d][i] = Math.round((contados[d][i]+q)*10)/10;
+  transfLog.unshift({o,d,ins:INSUMOS[i].n,qtd:q});
+  msg('#tr-msg','ok','Transferido: '+num(q,1)+' '+INSUMOS[i].un+' de '+INSUMOS[i].n+', de '+o+' para '+d+'. As contagens das duas lojas já refletem o movimento.');
+  desenharTransf(); atualizarAcao();
+});
 
 /* ---------- Porção ---------- */
 function desenharPorcao(){
@@ -417,21 +628,51 @@ function desenharPorcao(){
   }).join('');
 }
 
+/* ---------- Fichas e insumos ---------- */
+const fichaEdit = JSON.parse(JSON.stringify(FICHAS));
+function desenharFichas(){
+  const sabor = Object.keys(FICHAS)[+$('#fi-sabor').value], f = fichaEdit[sabor];
+  let total=0;
+  $('#tfi tbody').innerHTML = Object.keys(f).map(k=>{ const i=+k, ins=INSUMOS[i], c=f[k]/1000*ins.preco; total+=c;
+    return '<tr><td><b>'+ins.n+'</b></td><td><input type="number" min="0" step="1" data-k="'+k+'" value="'+f[k]+'" aria-label="Gramas de '+ins.n+'"></td><td>'+brl(ins.preco)+'</td><td data-c="'+k+'">'+brl(c)+'</td></tr>'; }).join('')
+    + '<tr class="tot"><td>Total</td><td></td><td></td><td id="fi-tot">'+brl(total)+'</td></tr>';
+  $('#tfi tbody').querySelectorAll('input').forEach(inp=>inp.addEventListener('input',()=>{
+    const v=parseFloat(inp.value); if(isNaN(v)||v<0) return; f[inp.dataset.k]=v; atualizarFicha(f);
+  }));
+  atualizarFicha(f);
+}
+function atualizarFicha(f){
+  let total=0; Object.keys(f).forEach(k=>{ const c=f[k]/1000*INSUMOS[+k].preco; total+=c; const td=$('#tfi td[data-c="'+k+'"]'); if(td) td.textContent=brl(c); });
+  const preco = fatMes('all')/pizzasMes('all');
+  $('#fi-tot').textContent=brl(total); $('#fi-custo').textContent=brl(total); $('#fi-preco').textContent=brl(preco); $('#fi-pct').textContent=num(total/preco*100,1)+'%';
+}
+
 /* ---------- Navegação e controles ---------- */
-document.querySelectorAll('.nav[data-tab]').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('.nav').forEach(x=>x.classList.remove('on')); b.classList.add('on');
-  ['visao','contagem','porcao'].forEach(id=>$('#'+id).classList.toggle('hide',id!==b.dataset.tab));
-  if(b.dataset.tab==='contagem') desenharContagem();
-  if(b.dataset.tab==='porcao') desenharPorcao();
-  window.scrollTo(0,0);
-}));
+const DESENHA = { visao:desenharVisao, caixa:desenharCaixa, pizzas:desenharPizzas, estoque:desenharEstoque, planejar:desenharPlanejar, contagem:desenharContagem, compra:desenharCompras, transf:desenharTransf, porcao:desenharPorcao, fichas:desenharFichas };
+const ABAS = Object.keys(DESENHA);
+function abrir(tab){
+  document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('on',x.dataset.tab===tab));
+  ABAS.forEach(id=>$('#'+id).classList.toggle('hide',id!==tab));
+  DESENHA[tab](); window.scrollTo(0,0);
+}
+document.querySelectorAll('.nav[data-tab]').forEach(b=>b.addEventListener('click',()=>abrir(b.dataset.tab)));
 $('#loja').addEventListener('change',e=>{ est.loja=e.target.value; est.diaSel=null; desenharVisao(); });
 $('#semana').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ $('#semana').querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); est.per=b.dataset.p; est.diaSel=null; desenharVisao(); }));
 $('#metrica').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ $('#metrica').querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); est.met=b.dataset.m; desenharVisao(); }));
+$('#loja-cx').addEventListener('change',desenharCaixa);
+$('#loja-pz').addEventListener('change',desenharPizzas);
+$('#loja-es').addEventListener('change',desenharEstoque);
+$('#es-abas').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ $('#es-abas').querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); abaEs=b.dataset.e; desenharEstoque(); }));
+$('#loja-pl').addEventListener('change',desenharPlanejar);
+$('#alvo').addEventListener('input',desenharPlanejar);
 $('#loja2').addEventListener('change',desenharContagem);
 $('#reset-c').addEventListener('click',()=>{ iniciarContados($('#loja2').value); desenharContagem(); });
 $('#gr').addEventListener('input',desenharPorcao);
-desenharVisao();
+$('#fi-sabor').addEventListener('change',desenharFichas);
+popular('#cp-ins', INSUMOS.map(i=>i.n+' ('+i.un+')')); popular('#tr-ins', INSUMOS.map(i=>i.n+' ('+i.un+')')); popular('#fi-sabor', Object.keys(FICHAS));
+$('#cp-ins').addEventListener('change',sugerirValor); $('#cp-qtd').addEventListener('input',sugerirValor); sugerirValor();
+const rapido = new URLSearchParams(location.search).get('tab'); /* ?tab=estoque abre direto numa tela */
+desenharVisao(); if(rapido && DESENHA[rapido]) abrir(rapido);
 </script>
 </body>
 </html>
